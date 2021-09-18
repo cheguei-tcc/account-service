@@ -1,0 +1,68 @@
+image: node
+
+definitions:
+  steps:
+      - step: &compile
+          caches:
+            - node
+          name: 'compile'
+          condition:
+            changesets:
+              includePaths:
+                - "src/**"
+          script:
+            - npm ci
+            - npm run prebuild && npm run build
+      - step: &lint
+          caches:
+            - node
+          name: 'lint'
+          condition:
+            changesets:
+              includePaths:
+                - "src/**"
+                - "test/**"
+          script:
+            - npm ci
+            - npm run lint
+      - step: &test
+          caches:
+            - node
+          name: 'test'
+          condition:
+            changesets:
+              includePaths:
+                - "src/**"
+          script:
+            - echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+            - npm ci
+            - npm test
+      - step: &buildNpush
+          caches:
+            - node
+          name: 'build and push image to registry'
+          services:
+            - docker
+          condition:
+            changesets:
+              includePaths:
+                - "src/**"
+          script:
+            - IMAGE="cheguei.azurecr.io/$BITBUCKET_REPO_SLUG"
+            - VERSION="latest" # "$BITBUCKET_BUILD_NUMBER"
+            - echo ${REGISTRY_PASSWORD} | docker login cheguei.azurecr.io --username cheguei --password-stdin
+            - docker build -t ${IMAGE} .
+            - docker tag ${IMAGE} ${IMAGE}:${VERSION}
+            - docker push ${IMAGE}:${VERSION}
+
+pipelines:
+  pull-requests:
+    '**':
+      - parallel:
+        - step: *test
+        - step: *lint
+        - step: *compile
+  branches:
+    master:
+      - step:
+          <<: *buildNpush
