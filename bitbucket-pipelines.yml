@@ -34,7 +34,6 @@ definitions:
               includePaths:
                 - "src/**"
           script:
-            - echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
             - npm ci
             - npm test
       - step: &buildNpush
@@ -54,6 +53,13 @@ definitions:
             - docker build -t ${IMAGE} .
             - docker tag ${IMAGE} ${IMAGE}:${VERSION}
             - docker push ${IMAGE}:${VERSION}
+      - step: &migration
+          caches:
+            - node
+          name: 'Run Migration & Seeds'
+          script:
+            - npm ci
+            - npm run knex:migrate && npm run knex:seed:run
 
 pipelines:
   pull-requests:
@@ -66,3 +72,6 @@ pipelines:
     master:
       - step:
           <<: *buildNpush
+    manual:
+      - step:
+          <<: *migration
