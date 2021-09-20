@@ -10,7 +10,6 @@ import { AccountModule } from '../account/account.module';
       config: require('../../knexfile'),
     }),
     //MongooseModule.forRoot(process.env.MONGO_URI || 'localhost:2017/cheguei'),
-    NotificationModule,
     AccountModule,
   ],
   controllers: [AppController],
