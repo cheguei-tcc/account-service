@@ -21,11 +21,26 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('classroom', (table: Knex.TableBuilder) => {
     table.increments('id');
     table.integer('school_id').references('id').inTable('school').notNullable();
-    table.integer('student_id').references('id').inTable('user').nullable();
     table.string('name').notNullable();
     table.string('period');
     table.string('description');
+    table.unique(['school_id', 'name', 'period', 'description']);
   });
+
+  await knex.schema.createTable(
+    'student_classroom',
+    (table: Knex.TableBuilder) => {
+      table.increments('id');
+      table
+        .integer('classroom_id')
+        .references('id')
+        .inTable('classroom')
+        .notNullable();
+      table.integer('user_id').references('id').inTable('user').nullable();
+      table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
+      table.unique(['classroom_id', 'user_id']);
+    },
+  );
 
   await knex.schema.createTable('role', (table: Knex.TableBuilder) => {
     table.increments('id');
@@ -36,12 +51,14 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('id');
     table.integer('user_id').references('id').inTable('user').notNullable();
     table.integer('role_id').references('id').inTable('role').nullable();
+    table.unique(['user_id', 'role_id']);
   });
 }
 
 export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTableIfExists('user_role');
   await knex.schema.dropTableIfExists('role');
+  await knex.schema.dropTableIfExists('student_classroom');
   await knex.schema.dropTableIfExists('classroom');
   await knex.schema.dropTableIfExists('user');
   await knex.schema.dropTableIfExists('school');

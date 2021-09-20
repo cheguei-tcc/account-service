@@ -5,6 +5,7 @@ const records = [
   { id: 2, name: 'admin' },
   { id: 3, name: 'monitor' },
   { id: 4, name: 'student' },
+  { id: 5, name: 'parent' },
 ];
 
 export async function seed(knex: Knex): Promise<any> {
