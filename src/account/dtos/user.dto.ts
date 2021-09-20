@@ -28,6 +28,9 @@ export class PostUserDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
+    message: 'expected user CPF format 123.456.789-10',
+  })
   cpf: string;
 
   @ApiProperty()
@@ -45,10 +48,16 @@ export class PostUserDto {
   @ApiProperty({ description: 'CNPJ school this user is related to' })
   @IsString()
   @IsNotEmpty()
+  @Matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/, {
+    message: 'expected school CNPJ format: 12.456.789/1234-10',
+  })
   relatedSchoolCNPJ: string;
 
   @ApiPropertyOptional({ description: 'surrogate key of the parent user' })
   @IsString()
   @IsOptional()
+  @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
+    message: 'expected parent CPF format 123.456.789-10',
+  })
   relatedParentCPF?: string;
 }
