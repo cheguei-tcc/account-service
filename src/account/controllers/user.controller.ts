@@ -36,9 +36,9 @@ export class UserController {
   }
 
   @Post('login')
-  async login(@Body() body: UserLoginDto): Promise<void> {
+  async login(@Body() body: UserLoginDto): Promise<string> {
     try {
-      await this.userService.login(body);
+      return await this.userService.login(body);
     } catch (e) {
       if (e.code) {
         throw new HttpException(e.message, e.code);
