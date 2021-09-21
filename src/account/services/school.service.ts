@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SchoolRepository } from '../abstractions/school';
+import { ClassroomDto, PostClassroomDto } from '../dtos/clasroom.dto';
 import { PostSchoolDto, SchoolDto } from '../dtos/school.dto';
 import { GenericUserDto } from '../dtos/user.dto';
 
@@ -15,7 +16,15 @@ export class SchoolService {
     return this.schoolRepository.getAllStudents(cnpj);
   }
 
+  async listClassrooms(cnpj: string): Promise<ClassroomDto[]> {
+    return this.schoolRepository.getAllClassrooms(cnpj);
+  }
+
   async addSchool(postSchool: PostSchoolDto): Promise<void> {
-    return this.schoolRepository.create(postSchool);
+    await this.schoolRepository.create(postSchool);
+  }
+
+  async addClassroom(classroom: PostClassroomDto): Promise<void> {
+    await this.schoolRepository.createClassroom(classroom);
   }
 }

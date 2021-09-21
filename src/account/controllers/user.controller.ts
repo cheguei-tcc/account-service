@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpException,
@@ -9,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { GenericUserDto, PostUserDto } from '../dtos/user.dto';
+import { GenericUserDto, PostUserDto, UserLoginDto } from '../dtos/user.dto';
 import { UserService } from '../services/user.service';
 
 @ApiTags('Account')
@@ -36,8 +35,16 @@ export class UserController {
     }
   }
 
-  @Delete()
-  async delete(): Promise<void> {
-    // delete stuff
+  @Post('login')
+  async login(@Body() body: UserLoginDto): Promise<void> {
+    try {
+      await this.userService.login(body);
+    } catch (e) {
+      if (e.code) {
+        throw new HttpException(e.message, e.code);
+      } else {
+        throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 }

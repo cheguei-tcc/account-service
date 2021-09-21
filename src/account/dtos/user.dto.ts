@@ -61,3 +61,18 @@ export class PostUserDto {
   })
   relatedParentCPF?: string;
 }
+
+export class UserLoginDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
+    message: 'expected user CPF format 123.456.789-10',
+  })
+  cpf: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}

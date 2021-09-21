@@ -24,7 +24,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('name').notNullable();
     table.string('period');
     table.string('description');
-    table.unique(['school_id', 'name', 'period', 'description']);
+    table.unique(['school_id', 'name', 'period']);
   });
 
   await knex.schema.createTable(

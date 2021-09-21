@@ -14,6 +14,14 @@ export class UserRepositoryKnexImpl extends UserRepository {
     return this.knex('user').select(['name', 'cpf']);
   }
 
+  async getPasswordHash(cpf: string): Promise<string> {
+    const { password } = await this.knex('user')
+      .select(['password'])
+      .where({ cpf })
+      .first();
+    return password;
+  }
+
   async create(user: PostUserDto): Promise<void> {
     return this.knex.transaction(async (trx) => {
       const [schooldId] = await trx('school')

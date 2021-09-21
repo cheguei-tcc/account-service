@@ -55,7 +55,7 @@ export async function seed(knex: Knex): Promise<any> {
   ]);
 
   // adventista classroom seed entries
-  await knex.raw(`? ON CONFLICT (id) DO NOTHING`, [
+  await knex.raw(`? ON CONFLICT DO NOTHING`, [
     knex('classroom').insert(
       adventistaClassrooms.map((c) => ({
         ...c,
