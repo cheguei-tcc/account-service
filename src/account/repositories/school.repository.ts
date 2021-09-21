@@ -3,6 +3,7 @@ import { InjectKnex, Knex } from 'nestjs-knex';
 import { PostSchoolDto, SchoolDto } from '../dtos/school.dto';
 import { SchoolRepository } from '../abstractions/school';
 import { GenericUserDto } from '../dtos/user.dto';
+import { ClassroomDto, PostClassroomDto } from '../dtos/clasroom.dto';
 
 @Injectable()
 export class SchoolRepositoryKnexImpl extends SchoolRepository {
@@ -31,5 +32,22 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
       .innerJoin('school as s', 's.id', 'u.school_id')
       .where('s.cnpj', '=', cnpj)
       .andWhere('r.name', '=', 'student');
+  }
+
+  async getAllClassrooms(cnpj: string): Promise<ClassroomDto[]> {
+    return this.knex('classroom as c')
+      .select(['c.name', 'c.period', 'c.description'])
+      .innerJoin('school as s', 's.id', 'c.school_id')
+      .where('s.cnpj', '=', cnpj);
+  }
+
+  async createClassroom(classroom: PostClassroomDto): Promise<void> {
+    const { relatedSchoolCNPJ, ...classroomData } = classroom;
+    await this.knex('classroom').insert({
+      ...classroomData,
+      school_id: this.knex('school')
+        .select('id')
+        .where({ cnpj: relatedSchoolCNPJ }),
+    });
   }
 }
