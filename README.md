@@ -6,6 +6,8 @@ API desenvolvida do projeto "cheguei" para a disciplina de Linguagem de programa
 
 > API está publicada no serviço AppService da *azure*, para o banco de dados, utilizamos o free tier da [elephantSQL](https://www.elephantsql.com/) que oferece um serviço de pgSQL gerenciado.
 
+- Utilizamos o framework NestJS para desenvolver a API.
+
 - **[Swagger da API](https://cheguei-api.azurewebsites.net/docs/)**
 ## Rodando o Projeto localmente :scroll:
 
