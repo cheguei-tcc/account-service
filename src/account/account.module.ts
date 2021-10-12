@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UserController } from './controllers/user.controller';
 import { UserRepositoryKnexImpl } from './repositories/user.repository';
 import { UserService } from './services/user.service';
@@ -9,9 +9,10 @@ import { SchoolController } from './controllers/school.controller';
 import { SchoolService } from './services/school.service';
 import { SchoolRepository } from './abstractions/school';
 import { SchoolRepositoryKnexImpl } from './repositories/school.repository';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [],
+  imports: [forwardRef(() => AuthModule)],
   controllers: [UserController, SchoolController],
   providers: [
     UserService,
@@ -23,5 +24,6 @@ import { SchoolRepositoryKnexImpl } from './repositories/school.repository';
     SchoolService,
     { provide: SchoolRepository, useClass: SchoolRepositoryKnexImpl },
   ],
+  exports: [UserService],
 })
 export class AccountModule {}
