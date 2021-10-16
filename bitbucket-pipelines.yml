@@ -46,6 +46,7 @@ definitions:
             changesets:
               includePaths:
                 - "src/**"
+                - "bitbucket-pipelines.yml"
           script:
             - IMAGE="cheguei.azurecr.io/$BITBUCKET_REPO_SLUG"
             - VERSION="latest" # "$BITBUCKET_BUILD_NUMBER"
