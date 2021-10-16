@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../abstractions/user';
-import { GenericUserDto, PostUserDto, UserLoginDto } from '../dtos/user.dto';
+import {
+  GenericUserDto,
+  PostUserDto,
+  UserInfoDto,
+  UserLoginDto,
+} from '../dtos/user.dto';
 import { Encrypter } from '../../common/abstractions/encrypter';
 import { BaseError } from '../../common/errors/base';
 
@@ -20,11 +25,15 @@ export class UserService {
     return this.userRepository.create(postUser);
   }
 
-  async login({ cpf, password }: UserLoginDto): Promise<string> {
-    const hash = await this.userRepository.getPasswordHash(cpf);
-    const isCorrect = await this.encrypter.compare(password, hash);
+  async login({ username, password }: UserLoginDto): Promise<UserInfoDto> {
+    const userInfo = await this.userRepository.getUserInfo(username);
+    if (!userInfo) throw new BaseError('User does not found', 404);
+    const isCorrect = await this.encrypter.compare(
+      password,
+      userInfo.passwordHash,
+    );
     if (isCorrect) {
-      return 'fake-jwt-token';
+      return userInfo;
     }
     throw new BaseError('Wrong Credentials', 401);
   }
