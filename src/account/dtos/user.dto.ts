@@ -19,6 +19,24 @@ export enum UserRole {
   Parent = 'parent',
 }
 
+export interface UserInfoDto {
+  name: string;
+  cpf: string;
+  passwordHash: string;
+  school?: {
+    name: string;
+    cnpj: string;
+  };
+  parent?: {
+    name: string;
+    cpf: string;
+  };
+}
+
+export interface UserLoginResponseDto {
+  accessToken: string;
+}
+
 export class PostUserDto {
   @ApiProperty()
   @IsString()
@@ -66,10 +84,7 @@ export class UserLoginDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
-    message: 'expected user CPF format 123.456.789-10',
-  })
-  cpf: string;
+  username: string;
 
   @ApiProperty()
   @IsString()
