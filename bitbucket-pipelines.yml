@@ -48,7 +48,7 @@ definitions:
                 - "src/**"
                 - "bitbucket-pipelines.yml"
           script:
-            - IMAGE="cheguei.azurecr.io/$BITBUCKET_REPO_SLUG"
+            - IMAGE="${REGISTRY_HOST}/$BITBUCKET_REPO_SLUG"
             - VERSION="latest" # "$BITBUCKET_BUILD_NUMBER"
             - echo ${REGISTRY_PASSWORD} | docker login ${REGISTRY_HOST} --username ${REGISTRY_USERNAME} --password-stdin
             - docker build -t ${IMAGE} .
