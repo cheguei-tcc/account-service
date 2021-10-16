@@ -6,22 +6,39 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { GenericUserDto, PostUserDto, UserLoginDto } from '../dtos/user.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthService } from '../../auth/auth.service';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { LocalAuthGuard } from '../../auth/guards/local-auth.guard';
+import {
+  GenericUserDto,
+  PostUserDto,
+  UserLoginDto,
+  UserLoginResponseDto,
+} from '../dtos/user.dto';
 import { UserService } from '../services/user.service';
 
 @ApiTags('Account')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard)
   @Get()
   async listUsers(): Promise<GenericUserDto[]> {
     return await this.userService.listUsers();
   }
 
   @HttpCode(HttpStatus.CREATED)
+  @ApiBearerAuth('accessToken')
+  @UseGuards(JwtAuthGuard)
   @Post()
   async createUser(@Body() body: PostUserDto): Promise<void> {
     try {
@@ -36,10 +53,14 @@ export class UserController {
   }
 
   @HttpCode(HttpStatus.OK)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Body() body: UserLoginDto): Promise<string> {
+  async login(
+    @Body() _: UserLoginDto,
+    @Request() req,
+  ): Promise<UserLoginResponseDto> {
     try {
-      return await this.userService.login(body);
+      return await this.authService.login(req.user);
     } catch (e) {
       if (e.code) {
         throw new HttpException(e.message, e.code);
