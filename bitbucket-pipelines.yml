@@ -49,7 +49,7 @@ definitions:
           script:
             - IMAGE="cheguei.azurecr.io/$BITBUCKET_REPO_SLUG"
             - VERSION="latest" # "$BITBUCKET_BUILD_NUMBER"
-            - echo ${REGISTRY_PASSWORD} | docker login cheguei.azurecr.io --username cheguei --password-stdin
+            - echo ${REGISTRY_PASSWORD} | docker login ${REGISTRY_HOST} --username ${REGISTRY_USERNAME} --password-stdin
             - docker build -t ${IMAGE} .
             - docker tag ${IMAGE} ${IMAGE}:${VERSION}
             - docker push ${IMAGE}:${VERSION}
@@ -69,6 +69,10 @@ pipelines:
         - step: *lint
         - step: *compile
   branches:
+    dev:
+      - step:
+          <<: *buildNpush
+          deployment: dev
     master:
       - step:
           <<: *buildNpush
