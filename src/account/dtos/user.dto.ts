@@ -23,6 +23,7 @@ export interface UserInfoDto {
   name: string;
   cpf: string;
   passwordHash: string;
+  roles: string[];
   school?: {
     name: string;
     cnpj: string;
