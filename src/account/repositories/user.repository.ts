@@ -40,7 +40,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
         schoolInfoSelectData,
         parentInfoSelectData,
         this.knex.raw(`
-        array(select r.name from user_role ur inner join role r on r.id = ur.role_id  where ur.id = u.id) as roles`),
+        array(select r.name from user_role ur inner join role r on r.id = ur.role_id where ur.user_id = u.id) as roles`),
       ])
       .leftJoin('school as s', 's.id', 'u.school_id')
       .leftJoin('user as u2', 'u2.id', 'u.parent_id')
