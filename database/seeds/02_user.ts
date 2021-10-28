@@ -5,6 +5,7 @@ const adventistaSurrogateKey = '43.586.056/0001-82';
 const novaGenteSurrogateKey = '52.190.246/0003-39';
 
 const monitorPass = bcrypt.hashSync('monitor', 7);
+const adminPass = bcrypt.hashSync('admin', 7);
 const rootUserPass = bcrypt.hashSync(process.env.ROOT_USER_PASS || 'super', 7);
 
 const users = [
@@ -13,6 +14,13 @@ const users = [
     cpf: '252.902.417-01',
     password: rootUserPass,
     role: 'super',
+  },
+  {
+    name: 'Renato',
+    cpf: '103.011.320-38',
+    password: adminPass,
+    role: 'admin',
+    schoolCnpj: novaGenteSurrogateKey,
   },
   {
     name: 'Guilhermina',
