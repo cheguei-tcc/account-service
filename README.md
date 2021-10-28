@@ -8,7 +8,8 @@ API desenvolvida do projeto "cheguei" para a disciplina de Linguagem de programa
 
 > API está publicada no serviço AppService da *azure*, para o banco de dados, utilizamos o free tier da [elephantSQL](https://www.elephantsql.com/) que oferece um serviço de pgSQL gerenciado.
 
-- **[Swagger da API](https://cheguei-api.azurewebsites.net/docs/)**
+- **[Swagger da API](https://cheguei-api.azurewebsites.net/docs/)** ***`PROD`***
+- **[Swagger da API](https://cheguei-api-dev.azurewebsites.net/docs/)** ***`DEV`***
 ## Rodando o Projeto localmente :scroll:
 
 - Instale as dependências do projeto com `npm install`
@@ -26,8 +27,15 @@ O banco de dados foi populado de acordo com os scripts em `database/seeds`, usu�
 
 ```
 {
-  "cpf": "252.902.417-01",
+  "username": "252.902.417-01",
   "password": "superadmin"
+}
+```
+
+```
+{
+  "username": "786.921.150-88",
+  "password": "monitor"
 }
 ```
 
