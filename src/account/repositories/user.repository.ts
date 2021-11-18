@@ -11,11 +11,12 @@ export class UserRepositoryKnexImpl extends UserRepository {
     super();
   }
 
-  async getAll(): Promise<GenericUserDto[]> {
-    return this.knex('user').select(['name', 'cpf']);
+  async getAll(cnpj: string): Promise<GenericUserDto[] | UserInfoDto[]> {
+    return cnpj
+      ? this.getUsersInfo(cnpj)
+      : this.knex('user').select(['name', 'cpf']);
   }
-
-  async getUserInfo(cpf: string): Promise<UserInfoDto> {
+  private userInfoCommonQuery(omitPasswordHash = false) {
     const schoolInfoSelectData = this.knex.raw(
       `
       case when u.school_id is not null then
@@ -32,20 +33,30 @@ export class UserRepositoryKnexImpl extends UserRepository {
       `,
     );
 
+    const selectFields = [
+      'u.name',
+      'u.cpf',
+      schoolInfoSelectData,
+      parentInfoSelectData,
+      this.knex.raw(`
+      array(select r.name from user_role ur inner join role r on r.id = ur.role_id where ur.user_id = u.id) as roles`),
+    ];
+
+    if (!omitPasswordHash) selectFields.push('u.password as passwordHash');
+
     return this.knex('user as u')
-      .select<UserInfoDto>([
-        'u.name',
-        'u.cpf',
-        'u.password as passwordHash',
-        schoolInfoSelectData,
-        parentInfoSelectData,
-        this.knex.raw(`
-        array(select r.name from user_role ur inner join role r on r.id = ur.role_id where ur.user_id = u.id) as roles`),
-      ])
+      .select<UserInfoDto>(selectFields)
       .leftJoin('school as s', 's.id', 'u.school_id')
-      .leftJoin('user as u2', 'u2.id', 'u.parent_id')
-      .where('u.cpf', '=', cpf)
-      .first();
+      .leftJoin('user as u2', 'u2.id', 'u.parent_id');
+  }
+
+  private async getUsersInfo(cnpj: string): Promise<any> {
+    // omit password hash as true value
+    return this.userInfoCommonQuery(true).where('s.cnpj', '=', cnpj);
+  }
+
+  async getUserInfo(cpf: string): Promise<UserInfoDto> {
+    return this.userInfoCommonQuery().where('u.cpf', '=', cpf).first();
   }
 
   async getPasswordHash(cpf: string): Promise<string> {
@@ -58,11 +69,11 @@ export class UserRepositoryKnexImpl extends UserRepository {
 
   async create(user: PostUserDto): Promise<void> {
     return this.knex.transaction(async (trx) => {
-      const [schooldId] = await trx('school')
+      const [schoolId] = await trx('school')
         .select('id')
         .where({ cnpj: user.relatedSchoolCNPJ });
 
-      if (!schooldId) {
+      if (!schoolId) {
         throw new BaseError(
           `School CNPJ ${user.relatedSchoolCNPJ} must exist`,
           400,
@@ -79,6 +90,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
               .select('id')
               .where({ cpf: user.relatedParentCPF }),
           }),
+          school_id: schoolId.id,
         })
         .returning('id');
 

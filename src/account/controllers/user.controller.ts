@@ -6,10 +6,11 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../../auth/auth.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../auth/guards/local-auth.guard';
@@ -31,9 +32,14 @@ export class UserController {
 
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
+  @ApiQuery({
+    name: 'cnpj',
+    description: 'cnpjSchool to list students',
+    required: false,
+  })
   @Get()
-  async listUsers(): Promise<GenericUserDto[]> {
-    return await this.userService.listUsers();
+  async listUsers(@Query('cnpj') cnpj?: string): Promise<GenericUserDto[]> {
+    return await this.userService.listUsers(cnpj);
   }
 
   @HttpCode(HttpStatus.CREATED)

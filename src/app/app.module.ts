@@ -5,6 +5,7 @@ import { KnexModule } from 'nestjs-knex';
 import { AccountModule } from '../account/account.module';
 import { NotificationModule } from '../notification/notification.module';
 import { AuthModule } from '../auth/auth.module';
+import { EventsModule } from '../event/events.module';
 @Module({
   imports: [
     KnexModule.forRoot({
@@ -13,6 +14,7 @@ import { AuthModule } from '../auth/auth.module';
     AccountModule,
     NotificationModule,
     AuthModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

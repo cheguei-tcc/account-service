@@ -16,8 +16,8 @@ export class UserService {
     private readonly encrypter: Encrypter,
   ) {}
 
-  async listUsers(): Promise<GenericUserDto[]> {
-    return this.userRepository.getAll();
+  async listUsers(cnpj: string): Promise<GenericUserDto[]> {
+    return this.userRepository.getAll(cnpj);
   }
 
   async addUser(postUser: PostUserDto): Promise<void> {
