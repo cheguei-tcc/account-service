@@ -31,8 +31,22 @@ export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}
 
   @Get()
-  @Roles(Role.Sudo)
-  async listSchools(): Promise<SchoolDto[]> {
+  @Roles(Role.Sudo, Role.Admin)
+  @ApiQuery({
+    name: 'cnpj',
+    description: 'cnpjSchool to list students',
+    required: false,
+  })
+  async listSchools(
+    @Query('cnpj') cnpj: string,
+    @Res() res: Response,
+  ): Promise<SchoolDto[] | any> {
+    if (cnpj) {
+      const school = await this.schoolService.getSchool(cnpj);
+      return school
+        ? res.status(HttpStatus.OK).json(school)
+        : res.status(HttpStatus.NOT_FOUND).json();
+    }
     return await this.schoolService.listSchools();
   }
 
@@ -76,20 +90,6 @@ export class SchoolController {
     @Query('cnpj') cnpj: string,
   ): Promise<void> {
     await this.schoolService.editSchool(cnpj, body);
-  }
-
-  @Roles(Role.Sudo, Role.Admin)
-  @Get()
-  @ApiQuery({
-    name: 'cnpj',
-    description: 'cnpjSchool to list students',
-    required: true,
-  })
-  async getSchool(@Query('cnpj') cnpj: string, @Res() res: Response) {
-    const school = await this.schoolService.getSchool(cnpj);
-    return school
-      ? res.status(HttpStatus.OK).json(school)
-      : res.status(HttpStatus.NOT_FOUND).json();
   }
 
   @Roles(Role.Sudo)

@@ -34,6 +34,11 @@ export class UserRepositoryKnexImpl extends UserRepository {
         })
         .returning('id');
 
+      await trx('user_role').insert({
+        user_id: parentId,
+        role_id: trx('role').select('id').where('name', '=', 'parent'),
+      });
+
       for (const child of children) {
         const [childId] = await trx('user')
           .insert({
@@ -57,6 +62,11 @@ export class UserRepositoryKnexImpl extends UserRepository {
         await trx('student_classroom').insert({
           user_id: childId,
           classroom_id: classroomId,
+        });
+
+        await trx('user_role').insert({
+          user_id: childId,
+          role_id: trx('role').select('id').where('name', '=', 'student'),
         });
       }
     });
