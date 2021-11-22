@@ -60,6 +60,7 @@ export class UserController {
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @Post('/bulk')
+  @ApiBody({ schema: {} })
   async createParentAndChildren(
     @Body() body: createParentAndChildrenDto,
     @Request() req,

@@ -41,14 +41,14 @@ export class UserRepositoryKnexImpl extends UserRepository {
             name: child.name,
             parent_id: parentId,
             password: defaultPassword,
-            schoo_id: schoolId,
+            school_id: schoolId,
           })
           .returning('id');
 
         const classroomId = trx('classroom')
           .select('id')
           .where({
-            schoo_id: schoolId,
+            school_id: schoolId,
             name: child.classroom.name,
             period: child.classroom.period,
           })
