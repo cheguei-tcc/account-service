@@ -64,66 +64,84 @@ export class SchoolController {
     await this.schoolService.addClassroom(body);
   }
 
-  @ApiParam({ name: 'cnpj' })
-  @ApiParam({ name: 'name' })
-  @ApiParam({ name: 'period' })
-  @Put('/classroom/:cnpj/:name/:period')
-  @Roles(Role.Sudo, Role.Admin)
-  async editClassroom(
-    @Body() body: ClassroomDto,
-    @Param() params,
-  ): Promise<void> {
-    await this.schoolService.editClassroom(
-      body,
-      params.cnpj,
-      params.name,
-      params.period,
-    );
-  }
-
-  @ApiParam({ name: 'cnpj' })
-  @ApiParam({ name: 'name' })
-  @ApiParam({ name: 'period' })
-  @Delete('/classroom/:cnpj/:name/:period')
-  @Roles(Role.Sudo, Role.Admin)
-  async deleteClassroom(
-    @Body() body: ClassroomDto,
-    @Param() params,
-  ): Promise<void> {
-    await this.schoolService.deleteClassroom(
-      params.cnpj,
-      params.name,
-      params.period,
-    );
-  }
-
-  @ApiParam({ name: 'cnpj' })
-  @Put(':cnpj')
+  @Put()
+  @ApiQuery({
+    name: 'cnpj',
+    description: 'cnpjSchool to list students',
+    required: true,
+  })
   @Roles(Role.Sudo)
   async editSchool(
     @Body() body: EditSchoolDto,
-    @Param() params,
+    @Query('cnpj') cnpj: string,
   ): Promise<void> {
-    await this.schoolService.editSchool(params.cnpj, body);
+    await this.schoolService.editSchool(cnpj, body);
   }
 
   @Roles(Role.Sudo, Role.Admin)
-  @Get(':cnpj')
-  @ApiParam({ name: 'cnpj' })
-  async getSchool(@Param() params, @Res() res: Response) {
-    const school = await this.schoolService.getSchool(params.cnpj);
+  @Get()
+  @ApiQuery({
+    name: 'cnpj',
+    description: 'cnpjSchool to list students',
+    required: true,
+  })
+  async getSchool(@Query('cnpj') cnpj: string, @Res() res: Response) {
+    const school = await this.schoolService.getSchool(cnpj);
     return school
       ? res.status(HttpStatus.OK).json(school)
       : res.status(HttpStatus.NOT_FOUND).json();
   }
 
   @Roles(Role.Sudo)
-  @Delete(':cnpj')
-  @ApiParam({ name: 'cnpj' })
-  async deleteSchool(@Param() params, @Res() res: Response) {
-    const deleted = await this.schoolService.deleteSchool(params.cnpj);
+  @Delete()
+  @ApiQuery({
+    name: 'cnpj',
+    description: 'cnpjSchool to list students',
+    required: true,
+  })
+  async deleteSchool(@Query('cnpj') cnpj: string, @Res() res: Response) {
+    const deleted = await this.schoolService.deleteSchool(cnpj);
     return deleted
       ? res.status(HttpStatus.NO_CONTENT).json()
       : res.status(HttpStatus.NOT_FOUND).json();
+  }
+
+  @ApiQuery({
+    name: 'cnpj',
+    description: 'cnpjSchool to list students',
+    required: true,
+  })
+  @ApiParam({ name: 'name' })
+  @ApiParam({ name: 'period' })
+  @Put('/classroom/:name/:period')
+  @Roles(Role.Sudo, Role.Admin)
+  async editClassroom(
+    @Body() body: ClassroomDto,
+    @Param() params,
+
+    @Query('cnpj') cnpj: string,
+  ): Promise<void> {
+    await this.schoolService.editClassroom(
+      body,
+      cnpj,
+      params.name,
+      params.period,
+    );
+  }
+
+  @ApiQuery({
+    name: 'cnpj',
+    description: 'cnpjSchool to list students',
+    required: true,
+  })
+  @ApiParam({ name: 'name' })
+  @ApiParam({ name: 'period' })
+  @Delete('/classroom/:name/:period')
+  @Roles(Role.Sudo, Role.Admin)
+  async deleteClassroom(
+    @Query('cnpj') cnpj: string,
+    @Param() params,
+  ): Promise<void> {
+    await this.schoolService.deleteClassroom(cnpj, params.name, params.period);
   }
 }
