@@ -6,6 +6,7 @@ import { AccountModule } from '../account/account.module';
 import { NotificationModule } from '../notification/notification.module';
 import { AuthModule } from '../auth/auth.module';
 import { EventsModule } from '../event/events.module';
+import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     KnexModule.forRoot({
@@ -15,6 +16,7 @@ import { EventsModule } from '../event/events.module';
     NotificationModule,
     AuthModule,
     EventsModule,
+    MongooseModule.forRoot(process.env.MONGO_URI),
   ],
   controllers: [AppController],
   providers: [AppService],

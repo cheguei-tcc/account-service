@@ -28,3 +28,23 @@ export class PostSchoolDto {
   @IsOptional()
   address?: string;
 }
+
+export class EditSchoolDto {
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  @Matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/, {
+    message: 'expected school CNPJ format: 12.456.789/1234-10',
+  })
+  cnpj?: string;
+
+  @ApiPropertyOptional()
+  @IsString()
+  @IsOptional()
+  address?: string;
+}

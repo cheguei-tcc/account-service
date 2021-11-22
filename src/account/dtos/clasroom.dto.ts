@@ -1,9 +1,26 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsString, Matches } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Matches,
+} from 'class-validator';
 
 export class ClassroomDto {
-  name: string;
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
   period?: string;
+
+  @ApiPropertyOptional()
+  @IsString()
+  @IsOptional()
   description?: string;
 }
 

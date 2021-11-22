@@ -38,6 +38,16 @@ export interface UserLoginResponseDto {
   accessToken: string;
 }
 
+export interface createParentAndChildrenDto {
+  parent: GenericUserDto;
+  defaultPassword: string;
+  children: {
+    name: string;
+    cpf: string;
+    classroom: { name: string; period: string; description: string };
+  }[];
+}
+
 export class PostUserDto {
   @ApiProperty()
   @IsString()
@@ -81,6 +91,20 @@ export class PostUserDto {
   relatedParentCPF?: string;
 }
 
+//export class EditUserDto extends PickType(PostUserDto, ['name'] as const) {}
+
+export class EditUserDto {
+  @ApiProperty()
+  @IsString()
+  name?: string;
+
+  @ApiProperty()
+  @IsString()
+  @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
+    message: 'expected user CPF format 123.456.789-10',
+  })
+  cpf?: string;
+}
 export class UserLoginDto {
   @ApiProperty()
   @IsString()

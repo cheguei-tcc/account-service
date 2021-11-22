@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectKnex, Knex } from 'nestjs-knex';
-import { GenericUserDto, PostUserDto } from '../dtos/user.dto';
+import {
+  createParentAndChildrenDto,
+  EditUserDto,
+  GenericUserDto,
+  PostUserDto,
+} from '../dtos/user.dto';
 import { BaseError } from '../../common/errors/base';
 import { UserRepository } from '../abstractions/user';
 import { UserInfoDto } from '../dtos/user.dto';
@@ -11,11 +16,89 @@ export class UserRepositoryKnexImpl extends UserRepository {
     super();
   }
 
+  insertParentChildren(
+    schoolCnpj: string,
+    insertData: createParentAndChildrenDto,
+  ): Promise<void> {
+    return this.knex.transaction(async (trx) => {
+      const schoolId = trx('school').select('id').where({ cnpj: schoolCnpj });
+
+      const { parent, defaultPassword, children } = insertData;
+
+      const [parentId] = await trx('user')
+        .insert({
+          cpf: parent.cpf,
+          name: parent.name,
+          password: defaultPassword,
+          school_id: schoolId,
+        })
+        .returning('id');
+
+      for (const child of children) {
+        const [childId] = await trx('user')
+          .insert({
+            cpf: child.cpf,
+            name: child.name,
+            parent_id: parentId,
+            password: defaultPassword,
+            schoo_id: schoolId,
+          })
+          .returning('id');
+
+        const classroomId = trx('classroom')
+          .select('id')
+          .where({
+            schoo_id: schoolId,
+            name: child.classroom.name,
+            period: child.classroom.period,
+          })
+          .returning('id');
+
+        await trx('student_classroom').insert({
+          user_id: childId,
+          classroom_id: classroomId,
+        });
+      }
+    });
+  }
+
+  async getParentChildren(parentCpf: string): Promise<
+    {
+      parent: GenericUserDto;
+      child: GenericUserDto;
+      classroom: { name: string; period: string; description: string };
+    }[]
+  > {
+    const parentSelectData = this.knex.raw(
+      `json_build_object('name', u.name, 'cpf', u.cpf) as parent`,
+    );
+    const childSelectData = this.knex.raw(
+      `json_build_object('name', u2.name, 'cpf', u2.cpf) as child`,
+    );
+    const classroomSelectData = this.knex.raw(
+      `json_build_object('name', c.name, 'period', c.period, 'description', c.description) as classroom`,
+    );
+
+    return await this.knex(`user as u`)
+      .select<
+        {
+          parent: GenericUserDto;
+          child: GenericUserDto;
+          classroom: { name: string; period: string; description: string };
+        }[]
+      >([parentSelectData, childSelectData, classroomSelectData])
+      .innerJoin(`user as u2`, 'u2.parent_id', 'u.id')
+      .innerJoin('student_classroom as sc', 'sc.user_id', 'u2.id')
+      .innerJoin('classroom as c', 'c.id', 'sc.classroom_id')
+      .where('u.cpf', '=', parentCpf);
+  }
+
   async getAll(cnpj: string): Promise<GenericUserDto[] | UserInfoDto[]> {
     return cnpj
       ? this.getUsersInfo(cnpj)
       : this.knex('user').select(['name', 'cpf']);
   }
+
   private userInfoCommonQuery(omitPasswordHash = false) {
     const schoolInfoSelectData = this.knex.raw(
       `
@@ -65,6 +148,15 @@ export class UserRepositoryKnexImpl extends UserRepository {
       .where({ cpf })
       .first();
     return password;
+  }
+
+  async edit(cpf: string, user: EditUserDto): Promise<void> {
+    await this.knex('user').update(user).where({ cpf });
+  }
+
+  async delete(cpf: string): Promise<boolean> {
+    const deleted = await this.knex('user').delete().where({ cpf });
+    return deleted > 0;
   }
 
   async create(user: PostUserDto): Promise<void> {

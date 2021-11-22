@@ -34,8 +34,22 @@ O banco de dados foi populado de acordo com os scripts em `database/seeds`, usu√
 
 ```
 {
+  "username": "103.011.320-38",
+  "password": "admin"
+}
+```
+
+```
+{
   "username": "786.921.150-88",
   "password": "monitor"
+}
+```
+
+```
+{
+  "username": "023.286.220-62",
+  "password": "pai"
 }
 ```
 
