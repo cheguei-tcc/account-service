@@ -12,7 +12,16 @@ API desenvolvida do projeto "cheguei" para a disciplina de Linguagem de programa
 - **[Swagger da API](https://cheguei-api-dev.azurewebsites.net/docs/)** ***`DEV`***
 ## Rodando o Projeto localmente :scroll:
 
+### APP
 - Instale as dependências do projeto com `npm install`
+- Rode o projeto com `npm run start:dev`
+
+### Database
+
+- Se não tiver uma instância pgsql rodando localmente com o acesso e database conhecido, uma opção é criar com docker:
+  
+  `docker run --name cheguei-account-db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=docker -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:alpine`
+
 - Crie e preencha o arquivo **.env**, de acordo com o *.env.schema* 
   >:warning: Sem as envs setadas ocorrerá erro ao tentar rodar as migrations/seeds :warning: 
 - Execute as migrations e as seeds do banco de dados com:
