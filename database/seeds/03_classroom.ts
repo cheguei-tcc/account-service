@@ -1,9 +1,9 @@
 import { Knex } from 'knex';
 
-const adventistaSurrogateKey = '43.586.056/0001-82';
-const novaGenteSurrogateKey = '52.190.246/0003-39';
+const cefsaSurrogateKey = '59.107.300/0001-17';
+const marquesSurrogateKey = '54.199.070/0001-40';
 
-const adventistaClassrooms = [
+const cefsaClassrooms = [
   {
     name: 'Turma 1',
     period: 'Matutino',
@@ -18,7 +18,7 @@ const adventistaClassrooms = [
   },
 ];
 
-const novaGenteClassrooms = [
+const marquesClassrooms = [
   {
     name: 'Turma 1A',
     period: 'Matutino',
@@ -45,11 +45,11 @@ export async function seed(knex: Knex): Promise<any> {
   // novagente classroom seed entries
   await knex.raw(`? ON CONFLICT DO NOTHING`, [
     knex('classroom').insert(
-      novaGenteClassrooms.map((c) => ({
+      marquesClassrooms.map((c) => ({
         ...c,
         school_id: knex('school')
           .select('id')
-          .where({ cnpj: novaGenteSurrogateKey }),
+          .where({ cnpj: marquesSurrogateKey }),
       })),
     ),
   ]);
@@ -57,11 +57,11 @@ export async function seed(knex: Knex): Promise<any> {
   // adventista classroom seed entries
   await knex.raw(`? ON CONFLICT DO NOTHING`, [
     knex('classroom').insert(
-      adventistaClassrooms.map((c) => ({
+      cefsaClassrooms.map((c) => ({
         ...c,
         school_id: knex('school')
           .select('id')
-          .where({ cnpj: adventistaSurrogateKey }),
+          .where({ cnpj: cefsaSurrogateKey }),
       })),
     ),
   ]);

@@ -27,6 +27,8 @@ export interface UserInfoDto {
   school?: {
     name: string;
     cnpj: string;
+    latitude?: string;
+    longitude?: string;
   };
   parent?: {
     name: string;

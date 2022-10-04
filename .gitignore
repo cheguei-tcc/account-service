@@ -38,3 +38,12 @@ lerna-debug.log*
 
 deploy.sh
 local.sh
+
+## CICD STUFF
+env.sh
+.terraform/*
+terraform.tfstate*
+.terraform*
+
+swarm-machines.pem
+hosts

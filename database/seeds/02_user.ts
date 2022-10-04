@@ -1,8 +1,8 @@
 import { Knex } from 'knex';
 import * as bcrypt from 'bcrypt';
 
-const adventistaSurrogateKey = '43.586.056/0001-82';
-const novaGenteSurrogateKey = '52.190.246/0003-39';
+const cefsaSurrogateKey = '59.107.300/0001-17';
+const marquesSurrogateKey = '54.199.070/0001-40';
 
 const monitorPass = bcrypt.hashSync('monitor', 7);
 const adminPass = bcrypt.hashSync('admin', 7);
@@ -14,34 +14,39 @@ const users = [
     cpf: '252.902.417-01',
     password: rootUserPass,
     role: 'super',
+    email: 'user@super.com'
   },
   {
     name: 'Renato',
     cpf: '103.011.320-38',
     password: adminPass,
     role: 'admin',
-    schoolCnpj: novaGenteSurrogateKey,
+    schoolCnpj: marquesSurrogateKey,
+    email: 'admin@novagente.com'
   },
   {
     name: 'Guilhermina',
     cpf: '495.820.892-53',
     password: monitorPass,
     role: 'monitor',
-    schoolCnpj: novaGenteSurrogateKey,
+    schoolCnpj: marquesSurrogateKey,
+    email: 'monitor@novagente.com'
   },
   {
     name: 'Alamino',
     cpf: '786.921.150-88',
     password: monitorPass,
     role: 'monitor',
-    schoolCnpj: adventistaSurrogateKey,
+    schoolCnpj: cefsaSurrogateKey,
+    email: 'monitor-mino@adventista.com'
   },
   {
     name: 'Jaque',
     cpf: '235.825.030-97',
     password: monitorPass,
     role: 'monitor',
-    schoolCnpj: adventistaSurrogateKey,
+    schoolCnpj: cefsaSurrogateKey,
+    email: 'monitor-jaque@adventista.com'
   },
 ];
 

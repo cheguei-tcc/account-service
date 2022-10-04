@@ -6,6 +6,8 @@ export async function up(knex: Knex): Promise<void> {
     table.string('cnpj').unique().notNullable();
     table.string('name').notNullable();
     table.string('address');
+    table.string('latitude');
+    table.string('longitude');
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
   });
 
@@ -14,8 +16,11 @@ export async function up(knex: Knex): Promise<void> {
     table.integer('school_id').references('id').inTable('school').nullable();
     table.integer('parent_id').references('id').inTable('user').nullable();
     table.string('name').notNullable();
-    table.string('cpf').notNullable().unique();
+    table.string('cpf').nullable().unique();
+    table.string('email').nullable().unique();
+    table.string('telephone').nullable();
     table.string('password').notNullable();
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
   });
 
   await knex.schema.createTable('classroom', (table: Knex.TableBuilder) => {

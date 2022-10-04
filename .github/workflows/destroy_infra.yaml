@@ -1,0 +1,19 @@
+name: Destroy Infra
+on: [workflow_dispatch]
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  deploy-terraform:
+    name: Destroy Infra
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Terraform init
+      run: cd aws && terraform init -input=false
+
+    - name: Terraform Destroy
+      run: cd aws && terraform destroy -auto-approve -input=false

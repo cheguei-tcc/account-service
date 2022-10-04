@@ -1,23 +1,23 @@
 import { Knex } from 'knex';
 import * as bcrypt from 'bcrypt';
 
-const adventistaSurrogateKey = '43.586.056/0001-82';
-const novaGenteSurrogateKey = '52.190.246/0003-39';
+const cefsaSurrogateKey = '59.107.300/0001-17';
+const marquesSurrogateKey = '54.199.070/0001-40';
 
 const filhoPass = bcrypt.hashSync('filho', 7);
 const paiPass = bcrypt.hashSync('pai', 7);
 
 const parentsData = [
-  // adventista parents
+  // cefsa parents
   {
     name: 'Matias Quemedo',
     cpf: '730.684.000-23',
+    email: "matiasquemedo@hotmail.com",
     password: paiPass,
-    schoolCnpj: adventistaSurrogateKey,
+    schoolCnpj: cefsaSurrogateKey,
     children: [
       {
         name: 'João Filho',
-        cpf: '636.787.153-54',
         password: filhoPass,
         classroomName: 'Turma 1',
         period: 'Matutino',
@@ -27,12 +27,12 @@ const parentsData = [
   {
     name: 'Higor Reculiano',
     cpf: '023.286.220-62',
+    email: "reculianinho@hotmail.com",
     password: paiPass,
-    schoolCnpj: adventistaSurrogateKey,
+    schoolCnpj: cefsaSurrogateKey,
     children: [
       {
         name: 'Avril',
-        cpf: '131.269.370-39',
         password: filhoPass,
         classroomName: 'Turma 1',
         period: 'Matutino',
@@ -49,12 +49,12 @@ const parentsData = [
   {
     name: 'Junior Colombino',
     cpf: '108.734.250-30',
+    email: "jrcolombino@hotmail.com",
     password: paiPass,
-    schoolCnpj: adventistaSurrogateKey,
+    schoolCnpj: cefsaSurrogateKey,
     children: [
       {
         name: 'Jasmino Santos',
-        cpf: '932.286.680-29',
         password: filhoPass,
         classroomName: 'Turma 3',
         period: 'Matutino',
@@ -65,7 +65,8 @@ const parentsData = [
     name: 'Galvão Bueno',
     cpf: '841.878.980-85',
     password: paiPass,
-    schoolCnpj: adventistaSurrogateKey,
+    email: "galvaobueno@hotmail.com",
+    schoolCnpj: cefsaSurrogateKey,
     children: [
       {
         name: 'Filho do Galvão',
@@ -80,11 +81,11 @@ const parentsData = [
     name: 'Roberto Neto',
     cpf: '188.131.120-17',
     password: paiPass,
-    schoolCnpj: adventistaSurrogateKey,
+    email: "robertoneto@hotmail.com",
+    schoolCnpj: cefsaSurrogateKey,
     children: [
       {
         name: 'Roberto Filho',
-        cpf: '626.629.110-00',
         password: filhoPass,
         classroomName: 'Turma 3',
         period: 'Matutino',
@@ -102,11 +103,11 @@ const parentsData = [
     name: 'Maria do Carmo',
     cpf: '629.467.050-05',
     password: paiPass,
-    schoolCnpj: adventistaSurrogateKey,
+    email: "mariadocarmo@hotmail.com",
+    schoolCnpj: cefsaSurrogateKey,
     children: [
       {
         name: 'Estevan',
-        cpf: '813.515.210-80',
         password: filhoPass,
         classroomName: 'Turma 1',
         period: 'Matutino',
@@ -116,8 +117,9 @@ const parentsData = [
   {
     name: 'Fatima do Rio',
     cpf: '879.128.090-74',
+    email: "fatimadorio@hotmail.com",
     password: paiPass,
-    schoolCnpj: adventistaSurrogateKey,
+    schoolCnpj: cefsaSurrogateKey,
     children: [
       {
         name: 'Fresno',
@@ -128,12 +130,12 @@ const parentsData = [
       },
     ],
   },
-  // nova gente parents
+  // marques parents
   {
     name: 'Marcelo Mattos',
-    cpf: '288.456.380-65',
     password: paiPass,
-    schoolCnpj: novaGenteSurrogateKey,
+    schoolCnpj: marquesSurrogateKey,
+    email: "marcelomatos@hotmail.com",
     children: [
       {
         name: 'Ramiro',
@@ -147,8 +149,9 @@ const parentsData = [
   {
     name: 'Gadu Betania',
     cpf: '201.217.860-05',
+    email: "betaniagadu@hotmail.com",
     password: paiPass,
-    schoolCnpj: novaGenteSurrogateKey,
+    schoolCnpj: marquesSurrogateKey,
     children: [
       {
         name: 'Betoven',
@@ -163,7 +166,8 @@ const parentsData = [
     name: 'Pedro Alvares',
     cpf: '325.463.000-91',
     password: paiPass,
-    schoolCnpj: novaGenteSurrogateKey,
+    email: "pedroalvares@hotmail.com",
+    schoolCnpj: marquesSurrogateKey,
     children: [
       {
         name: 'Jasmine Do Norte',
@@ -176,9 +180,10 @@ const parentsData = [
   },
   {
     name: 'Julio da Gaita',
-    cpf: '226.080.980-45',
+    cpf: '226.080.980-45',    
+    email: "gaitajl@hotmail.com",
     password: paiPass,
-    schoolCnpj: novaGenteSurrogateKey,
+    schoolCnpj: marquesSurrogateKey,
     children: [
       {
         name: 'Dourado',
@@ -192,8 +197,9 @@ const parentsData = [
   {
     name: 'Neo',
     cpf: '566.228.460-14',
+    email: "matrixrn@hotmail.com",
     password: paiPass,
-    schoolCnpj: novaGenteSurrogateKey,
+    schoolCnpj: marquesSurrogateKey,
     children: [
       {
         name: 'Diana',
@@ -207,8 +213,9 @@ const parentsData = [
   {
     name: 'Ana Maria Padrão',
     cpf: '851.163.470-36',
+    email: "mariapattern@hotmail.com",
     password: paiPass,
-    schoolCnpj: novaGenteSurrogateKey,
+    schoolCnpj: marquesSurrogateKey,
     children: [
       {
         name: 'Louro josé',
@@ -222,8 +229,9 @@ const parentsData = [
   {
     name: 'Junior Filho',
     cpf: '556.508.950-66',
-    password: paiPass,
-    schoolCnpj: novaGenteSurrogateKey,
+    password: paiPass,    
+    email: "juniorfilhomaspai@hotmail.com",
+    schoolCnpj: marquesSurrogateKey,
     children: [
       {
         name: 'Rubinho Filho',

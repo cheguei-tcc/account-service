@@ -3,15 +3,19 @@ import { Knex } from 'knex';
 const records = [
   {
     id: 1,
-    name: 'INSTITUTO ADVENTISTA DE ENSINO',
-    cnpj: '43.586.056/0001-82',
-    address: 'Estrada de Itapecerica, 5859 - Jardim IAE, São Paulo',
+    name: 'Centro Educacional Da Fundação Salvador Arena',
+    cnpj: '59.107.300/0001-17',
+    address: 'Estrada dos Alvarengas, 4001 - Alvarenga, São Bernardo',
+    latitude: '-23.7377699',
+    longitude: '-46.5859311'
   },
   {
     id: 2,
-    name: 'COLEGIO NOVA GENTE',
-    cnpj: '52.190.246/0003-39',
-    address: 'Rua Dário da Silva, 195 - Cidade Ademar, São Paulo',
+    name: 'Colégio Marquês de Monte Alegre',
+    cnpj: '54.199.070/0001-40',
+    address: 'R. Coriolano Durand, 515 - São Paulo',
+    latitude: '-23.6527437',
+    longitude: '-46.6578092'
   },
 ];
 

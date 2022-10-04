@@ -113,7 +113,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
     const schoolInfoSelectData = this.knex.raw(
       `
       case when u.school_id is not null then
-        json_build_object('name', s.name, 'cnpj', s.cnpj) 
+        json_build_object('name', s.name, 'cnpj', s.cnpj, 'latitude', s.latitude, 'longitude', s.longitude) 
       end as school
       `,
     );
