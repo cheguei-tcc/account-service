@@ -22,7 +22,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(process.env.USE_PROXY_PREFIX ? 'account/docs' : 'docs' , app, document);
+  SwaggerModule.setup('docs' , app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({

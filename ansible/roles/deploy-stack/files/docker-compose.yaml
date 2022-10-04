@@ -20,7 +20,6 @@ services:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
       - AWS_DEFAULT_REGION
-      - USE_PROXY_PREFIX=true
     networks:
       - public
 
