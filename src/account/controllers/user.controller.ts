@@ -26,6 +26,7 @@ import { AuthService } from '../../auth/auth.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../../auth/guards/local-auth.guard';
 import { Role, Roles } from '../../auth/roles.decorator';
+import { SNSService } from '../../aws/services/sns';
 import {
   createParentAndChildrenDto,
   EditUserDto,
@@ -42,6 +43,7 @@ export class UserController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    private readonly snsService: SNSService 
   ) {}
 
   @ApiBearerAuth('accessToken')
@@ -137,11 +139,11 @@ export class UserController {
   }
 
   @Roles(Role.Sudo, Role.Admin)
-  @Get(':cpf')
-  @ApiParam({ name: 'cpf' })
+  @Get(':email')
+  @ApiParam({ name: 'email' })
   async getUser(@Param() params) {
     try {
-      return await this.userService.getUserInfo(params.cpf);
+      return await this.userService.getUserInfo(params.email);
     } catch (e) {
       if (e.code) {
         throw new HttpException(e.message, e.code);

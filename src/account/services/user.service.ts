@@ -45,8 +45,8 @@ export class UserService {
     return this.userRepository.create(postUser);
   }
 
-  async getUserInfo(cpf: string): Promise<UserInfoDto> {
-    const userInfo = await this.userRepository.getUserInfo(cpf);
+  async getUserInfo(email: string): Promise<UserInfoDto> {
+    const userInfo = await this.userRepository.getUserInfo(email);
     if (!userInfo) throw new BaseError('User does not found', 404);
     const { passwordHash: _, ...user } = userInfo;
     return user as UserInfoDto;

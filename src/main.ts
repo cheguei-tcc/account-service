@@ -18,7 +18,7 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     .addServer('https://swarm.cheguei.app/account')
-    .addServer(`https://localhost:${port}`)
+    .addServer(`http://localhost:${port}`)
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

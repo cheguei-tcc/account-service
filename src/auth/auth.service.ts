@@ -10,9 +10,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string): Promise<UserInfoDto> {
+  async validateUser(email: string, pass: string): Promise<UserInfoDto> {
     const userInfo = await this.userService.login({
-      username,
+      username: email,
       password: pass,
     });
     return userInfo;

@@ -14,6 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
+    console.log('validate jwt strategy')
     // returns all data deserialized from JWT token to be available in req.user object
     return payload;
   }

@@ -11,7 +11,7 @@ export abstract class UserRepository {
   abstract create(user: PostUserDto): Promise<void>;
   abstract edit(cpf: string, user: EditUserDto): Promise<void>;
   abstract delete(cpf: string): Promise<boolean>;
-  abstract getUserInfo(cpf: string): Promise<UserInfoDto>;
+  abstract getUserInfo(email: string): Promise<UserInfoDto>;
   abstract getParentChildren(parentCpf: string): Promise<
     {
       parent: GenericUserDto;

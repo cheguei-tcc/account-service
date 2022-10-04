@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { KnexModule } from 'nestjs-knex';
 import { AccountModule } from '../account/account.module';
 import { AuthModule } from '../auth/auth.module';
+import { AwsSdkModule } from 'nest-aws-sdk';
+import { AWSModule } from '../aws/aws.module'
 
 @Module({
   imports: [
@@ -12,6 +14,14 @@ import { AuthModule } from '../auth/auth.module';
     }),
     AccountModule,
     AuthModule,
+    AWSModule,
+    AwsSdkModule.forRootAsync({
+      defaultServiceOptions: {
+        useValue: {
+          region: 'sa-east-1'
+        }
+      }
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

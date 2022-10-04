@@ -129,6 +129,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
     const selectFields = [
       'u.name',
       'u.cpf',
+      'u.email',
       schoolInfoSelectData,
       parentInfoSelectData,
       this.knex.raw(`
@@ -148,8 +149,8 @@ export class UserRepositoryKnexImpl extends UserRepository {
     return this.userInfoCommonQuery(true).where('s.cnpj', '=', cnpj);
   }
 
-  async getUserInfo(cpf: string): Promise<UserInfoDto> {
-    return this.userInfoCommonQuery().where('u.cpf', '=', cpf).first();
+  async getUserInfo(email: string): Promise<UserInfoDto> {
+    return this.userInfoCommonQuery().where('u.email', '=', email).first();
   }
 
   async getPasswordHash(cpf: string): Promise<string> {

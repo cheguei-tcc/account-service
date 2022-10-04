@@ -10,9 +10,10 @@ import { SchoolService } from './services/school.service';
 import { SchoolRepository } from './abstractions/school';
 import { SchoolRepositoryKnexImpl } from './repositories/school.repository';
 import { AuthModule } from '../auth/auth.module';
+import { AWSModule } from '../aws/aws.module';
 
 @Module({
-  imports: [forwardRef(() => AuthModule)],
+  imports: [forwardRef(() => AuthModule), AWSModule],
   controllers: [UserController, SchoolController],
   providers: [
     UserService,
