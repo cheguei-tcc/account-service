@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
+  const port = process.env.PORT || 8280;
 
   const config = new DocumentBuilder()
     .addBearerAuth(
@@ -16,10 +17,12 @@ async function bootstrap() {
       'Cheguei-API exposes all endpoints available to UI and Integration stuff',
     )
     .setVersion('1.0')
+    .addServer('https://swarm.cheguei.app/account')
+    .addServer(`https://localhost:${port}`)
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup(process.env.USE_PROXY_PREFIX ? 'account/docs' : 'docs' , app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -28,6 +31,6 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(process.env.PORT || 8280);
+  await app.listen(port);
 }
 bootstrap();
