@@ -70,21 +70,21 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
     return deleted > 0;
   }
 
-  async getAllStudents(cnpj: string): Promise<GenericUserDto[]> {
+  async getAllStudents(schoolId: number): Promise<GenericUserDto[]> {
     return this.knex('user_role as ur')
       .select(['u.cpf', 'u.name'])
       .innerJoin('user as u', 'u.id', 'ur.user_id')
       .innerJoin('role as r', 'r.id', 'ur.role_id')
       .innerJoin('school as s', 's.id', 'u.school_id')
-      .where('s.cnpj', '=', cnpj)
+      .where('s.id', '=', schoolId)
       .andWhere('r.name', '=', 'student');
   }
 
-  async getAllClassrooms(cnpj: string): Promise<ClassroomDto[]> {
+  async getAllClassrooms(schoolId: number): Promise<ClassroomDto[]> {
     return this.knex('classroom as c')
       .select(['c.name', 'c.period', 'c.description'])
       .innerJoin('school as s', 's.id', 'c.school_id')
-      .where('s.cnpj', '=', cnpj);
+      .where('s.id', '=', schoolId);
   }
 
   async createClassroom(classroom: PostClassroomDto): Promise<void> {

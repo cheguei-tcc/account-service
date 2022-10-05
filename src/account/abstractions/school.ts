@@ -9,9 +9,9 @@ export abstract class SchoolRepository {
   abstract delete(cnpj: string): Promise<boolean>;
   abstract getSchool(cnpj: string): Promise<SchoolDto>;
   // students stuff
-  abstract getAllStudents(cnpj: string): Promise<GenericUserDto[]>;
+  abstract getAllStudents(schoolId: number): Promise<GenericUserDto[]>;
   // classroom stuff
-  abstract getAllClassrooms(cnpj: string): Promise<ClassroomDto[]>;
+  abstract getAllClassrooms(schoolId: number): Promise<ClassroomDto[]>;
   abstract createClassroom(classroom: PostClassroomDto): Promise<void>;
   abstract editClassroom(
     classroomEditDto: ClassroomDto,

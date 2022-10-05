@@ -30,6 +30,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
           cpf: parent.cpf,
           name: parent.name,
           email: parent.email,
+          phone_number: parent.phoneNumber,
           password: defaultPassword,
           school_id: schoolId,
         })
@@ -69,6 +70,8 @@ export class UserRepositoryKnexImpl extends UserRepository {
           role_id: trx('role').select('id').where('name', '=', 'student'),
         });
       }
+
+      return parentId;
     });
   }
 
@@ -130,6 +133,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
       'u.id',
       'u.name',
       'u.cpf',
+      'u.phone_number',
       'u.email',
       schoolInfoSelectData,
       parentInfoSelectData,

@@ -16,12 +16,12 @@ export class SchoolService {
     return this.schoolRepository.getSchool(cnpj);
   }
 
-  async listStudents(cnpj: string): Promise<GenericUserDto[]> {
-    return this.schoolRepository.getAllStudents(cnpj);
+  async listStudents(schoolId: number): Promise<GenericUserDto[]> {
+    return this.schoolRepository.getAllStudents(schoolId);
   }
 
-  async listClassrooms(cnpj: string): Promise<ClassroomDto[]> {
-    return this.schoolRepository.getAllClassrooms(cnpj);
+  async listClassrooms(schoolId: number): Promise<ClassroomDto[]> {
+    return this.schoolRepository.getAllClassrooms(schoolId);
   }
 
   async addSchool(postSchool: PostSchoolDto): Promise<void> {

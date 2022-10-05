@@ -12,6 +12,7 @@ export type GenericUserDto = {
   name: string;
   cpf: string;
   email: string;
+  phoneNumber?: string;
 };
 
 export enum UserRole {
@@ -27,6 +28,7 @@ export interface UserInfoDto {
   cpf: string;
   email: string;
   passwordHash: string;
+  phone_number?: string;
   roles: string[];
   school?: {
     id: number;

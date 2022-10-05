@@ -70,15 +70,11 @@ export class UserController {
   ): Promise<void> {
     const cnpj = schoolCnpj ? schoolCnpj : req.user.school.cnpj;
     
-    await this.userService.createParentAndChildren(cnpj, body);
+    const parentId = await this.userService.createParentAndChildren(cnpj, body);
     
     const responsibleUpsertMessage = {
       responsible: {
-        name: body.parent.name,
-        CPF: body.parent.cpf,
-        school: {
-          CNPJ: cnpj,
-        },
+        id: parentId,
         students: body.children.map(c => ({name: c.name, classroom: c.classroom.name, period: c.classroom.period}))
       }
     }
@@ -159,6 +155,21 @@ export class UserController {
   async getUser(@Param() params) {
     try {
       return await this.userService.getUserInfo(params.email);
+    } catch (e) {
+      if (e.code) {
+        throw new HttpException(e.message, e.code);
+      } else {
+        throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
+  }
+
+  @Roles(Role.Sudo)
+  @Get(':schoolId')
+  @ApiParam({ name: 'schoolId' })
+  async syncResponsibleData(@Param() params) {
+    try {
+      throw new Error('await this.userService.listResponsibleWithChildren()');
     } catch (e) {
       if (e.code) {
         throw new HttpException(e.message, e.code);

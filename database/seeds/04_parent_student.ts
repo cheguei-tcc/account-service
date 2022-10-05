@@ -14,6 +14,7 @@ const parentsData = [
     cpf: '730.684.000-23',
     email: "matiasquemedo@hotmail.com",
     password: paiPass,
+    phone_number: '953884989',
     schoolCnpj: cefsaSurrogateKey,
     children: [
       {
@@ -28,7 +29,8 @@ const parentsData = [
     name: 'Higor Reculiano',
     cpf: '023.286.220-62',
     email: "reculianinho@hotmail.com",
-    password: paiPass,
+    password: paiPass,    
+    phone_number: '123456',
     schoolCnpj: cefsaSurrogateKey,
     children: [
       {
@@ -48,7 +50,8 @@ const parentsData = [
   },
   {
     name: 'Junior Colombino',
-    cpf: '108.734.250-30',
+    cpf: '108.734.250-30',      
+    phone_number: '123456',
     email: "jrcolombino@hotmail.com",
     password: paiPass,
     schoolCnpj: cefsaSurrogateKey,
@@ -65,6 +68,7 @@ const parentsData = [
     name: 'Galvão Bueno',
     cpf: '841.878.980-85',
     password: paiPass,
+    phone_number: '123456',
     email: "galvaobueno@hotmail.com",
     schoolCnpj: cefsaSurrogateKey,
     children: [
@@ -81,6 +85,7 @@ const parentsData = [
     name: 'Roberto Neto',
     cpf: '188.131.120-17',
     password: paiPass,
+    phone_number: '123456',
     email: "robertoneto@hotmail.com",
     schoolCnpj: cefsaSurrogateKey,
     children: [
@@ -103,6 +108,7 @@ const parentsData = [
     name: 'Maria do Carmo',
     cpf: '629.467.050-05',
     password: paiPass,
+    phone_number: '123456',
     email: "mariadocarmo@hotmail.com",
     schoolCnpj: cefsaSurrogateKey,
     children: [
@@ -116,7 +122,8 @@ const parentsData = [
   },
   {
     name: 'Fatima do Rio',
-    cpf: '879.128.090-74',
+    cpf: '879.128.090-74',      
+    phone_number: '123456',
     email: "fatimadorio@hotmail.com",
     password: paiPass,
     schoolCnpj: cefsaSurrogateKey,

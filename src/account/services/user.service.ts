@@ -18,11 +18,15 @@ export class UserService {
     private readonly userRepository: UserRepository,
     private readonly encrypter: Encrypter,
   ) {}
+  
+  async listResponsiblesWithChildren(): Promise<any> {
+    // TODO QUERY WITH ARRAY, LIST ALL PARENTS ROLES AND RESPECTIVE STUDENTS ?
+  };
 
   async createParentAndChildren(
     cnpj: string,
     data: createParentAndChildrenDto,
-  ): Promise<void> {
+  ): Promise<any> {
     data.defaultPassword = await this.encrypter.encrypt(
       process.env.DEFAULT_USER_PASSWORD || data.defaultPassword,
     );

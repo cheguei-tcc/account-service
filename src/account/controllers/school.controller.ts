@@ -57,18 +57,18 @@ export class SchoolController {
     await this.schoolService.addSchool(body);
   }
 
-  @ApiQuery({ name: 'cnpj', description: 'cnpjSchool to list students' })
+  @ApiQuery({ name: 'schoolId', description: 'schoolId to list students' })
   @Get('/student')
   @Roles(Role.Admin, Role.Sudo, Role.Monitor)
-  async listStudents(@Query('cnpj') cnpj: string): Promise<GenericUserDto[]> {
-    return await this.schoolService.listStudents(cnpj);
+  async listStudents(@Query('schoolId') schoolId: string): Promise<GenericUserDto[]> {
+    return await this.schoolService.listStudents(Number(schoolId));
   }
 
   @Get('/classroom')
   @Roles(Role.Admin, Role.Sudo, Role.Monitor)
-  @ApiQuery({ name: 'cnpj', description: 'cnpjSchool to list classrooms' })
-  async listClassrooms(@Query('cnpj') cnpj: string): Promise<ClassroomDto[]> {
-    return await this.schoolService.listClassrooms(cnpj);
+  @ApiQuery({ name: 'schoolId', description: 'schoolId to list classrooms' })
+  async listClassrooms(@Query('schoolId') schoolId: string): Promise<ClassroomDto[]> {
+    return await this.schoolService.listClassrooms(Number(schoolId));
   }
 
   @HttpCode(HttpStatus.CREATED)

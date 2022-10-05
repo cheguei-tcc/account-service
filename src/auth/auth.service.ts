@@ -23,6 +23,7 @@ export class AuthService {
       id: user.id,
       name: user.name,
       cpf: user.cpf,
+      phoneNumber: user.phone_number,
       roles: user.roles,
       ...(user.parent && { parent: user.parent }),
       ...(user.school && { school: user.school }),
