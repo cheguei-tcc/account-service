@@ -10,6 +10,7 @@ import {
 export type GenericUserDto = {
   name: string;
   cpf: string;
+  email: string;
 };
 
 export enum UserRole {
@@ -22,6 +23,7 @@ export enum UserRole {
 export interface UserInfoDto {
   name: string;
   cpf: string;
+  email: string;
   passwordHash: string;
   roles: string[];
   school?: {
@@ -58,16 +60,14 @@ export class PostUserDto {
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
   @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
     message: 'expected user CPF format 123.456.789-10',
   })
-  cpf: string;
+  cpf?: string;
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
-  password: string;
+  password?: string;
 
   @ApiProperty({
     enum: UserRole,

@@ -29,6 +29,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
         .insert({
           cpf: parent.cpf,
           name: parent.name,
+          email: parent.email,
           password: defaultPassword,
           school_id: schoolId,
         })
@@ -50,17 +51,16 @@ export class UserRepositoryKnexImpl extends UserRepository {
           })
           .returning('id');
 
-        const classroomId = trx('classroom')
+        const { id: classroomId } = await trx('classroom')
           .select('id')
           .where({
             school_id: schoolId,
             name: child.classroom.name,
             period: child.classroom.period,
-          })
-          .returning('id');
+          }).first();
 
         await trx('student_classroom').insert({
-          user_id: childId,
+          user_id: childId.id,
           classroom_id: classroomId,
         });
 
@@ -106,7 +106,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
   async getAll(cnpj: string): Promise<GenericUserDto[] | UserInfoDto[]> {
     return cnpj
       ? this.getUsersInfo(cnpj)
-      : this.knex('user').select(['name', 'cpf']);
+      : this.knex('user').select(['name', 'email', 'cpf']);
   }
 
   private userInfoCommonQuery(omitPasswordHash = false) {

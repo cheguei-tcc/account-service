@@ -10,6 +10,11 @@ provider "aws" {
   region = "us-east-2"
 }
 
+provider "aws" {
+  alias           = "south_america_sp"
+  region          = "sa-east-1"
+}
+
 resource "aws_security_group" "account_db_sg" {
   # Outbound to Internet
   ingress {
@@ -42,4 +47,9 @@ resource "aws_db_instance" "account_service" {
   allocated_storage    = 20
   skip_final_snapshot  = true
   publicly_accessible    = true
+}
+
+resource "aws_sns_topic" "responsible_updates" {
+  provider = aws.south_america_sp
+  name = "responsible-updates-topic"
 }

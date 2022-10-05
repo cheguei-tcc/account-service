@@ -66,9 +66,24 @@ export class UserController {
   async createParentAndChildren(
     @Body() body: createParentAndChildrenDto,
     @Request() req,
+    @Query('schoolCnpj') schoolCnpj?: string
   ): Promise<void> {
-    const cnpj = req.user.school.cnpj;
+    const cnpj = schoolCnpj ? schoolCnpj : req.user.school.cnpj;
+    
     await this.userService.createParentAndChildren(cnpj, body);
+    
+    const responsibleUpsertMessage = {
+      responsible: {
+        name: body.parent.name,
+        CPF: body.parent.cpf,
+        school: {
+          CNPJ: cnpj,
+        },
+        students: body.children.map(c => ({name: c.name, classroom: c.classroom.name, period: c.classroom.period}))
+      }
+    }
+
+    await this.snsService.publishMessage(JSON.stringify(responsibleUpsertMessage), process.env.AWS_RESPONSIBLE_UPDATE_TOPIC_ARN);
   }
 
   @HttpCode(HttpStatus.CREATED)

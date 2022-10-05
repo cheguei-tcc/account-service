@@ -13,6 +13,7 @@
     AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID')}}"
     AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY')}}"
     AWS_DEFAULT_REGION: "{{ lookup('env', 'AWS_DEFAULT_REGION')}}"
+    AWS_RESPONSIBLE_UPDATE_TOPIC_ARN: "{{ lookup('env', 'AWS_RESPONSIBLE_UPDATE_TOPIC_ARN')}}"
     DATABASE_NAME: "{{ lookup('env', 'DATABASE_NAME')}}"
     DATABASE_HOSTNAME: "{{ lookup('env', 'DATABASE_HOSTNAME')}}"
     DATABASE_PASSWORD: "{{ lookup('env', 'DATABASE_PASSWORD')}}"
