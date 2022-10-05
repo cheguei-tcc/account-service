@@ -82,7 +82,7 @@ export class UserController {
         students: body.children.map(c => ({name: c.name, classroom: c.classroom.name, period: c.classroom.period}))
       }
     }
-
+    
     await this.snsService.publishMessage(JSON.stringify(responsibleUpsertMessage), process.env.AWS_RESPONSIBLE_UPDATE_TOPIC_ARN);
   }
 
@@ -121,10 +121,10 @@ export class UserController {
   }
 
   @Roles(Role.Sudo, Role.Admin)
-  @Get('/parent/:cpf/children')
-  @ApiParam({ name: 'cpf' })
+  @Get('/parent/:id/children')
+  @ApiParam({ name: 'parentId' })
   async getParentChildren(@Param() params) {
-    return await this.userService.getParentChildren(params.cpf);
+    return await this.userService.getParentChildren(Number(params.id));
   }
 
   @ApiBearerAuth('accessToken')

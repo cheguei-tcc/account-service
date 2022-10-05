@@ -52,10 +52,10 @@ export class UserService {
     return user as UserInfoDto;
   }
 
-  async getParentChildren(parentCpf: string) {
-    const repoData = await this.userRepository.getParentChildren(parentCpf);
+  async getParentChildren(parentId: number) {
+    const repoData = await this.userRepository.getParentChildren(parentId);
     if (!repoData) throw new BaseError('User does not found', 404);
-    const { parent } = repoData.find((data) => data.parent.cpf == parentCpf);
+    const { parent } = repoData.find((data) => data.parent.id == parentId);
     const children = repoData.map((data) => ({
       name: data.child.name,
       cpf: data.child.cpf,

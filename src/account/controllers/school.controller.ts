@@ -65,7 +65,7 @@ export class SchoolController {
   }
 
   @Get('/classroom')
-  @Roles(Role.Admin, Role.Sudo)
+  @Roles(Role.Admin, Role.Sudo, Role.Monitor)
   @ApiQuery({ name: 'cnpj', description: 'cnpjSchool to list classrooms' })
   async listClassrooms(@Query('cnpj') cnpj: string): Promise<ClassroomDto[]> {
     return await this.schoolService.listClassrooms(cnpj);

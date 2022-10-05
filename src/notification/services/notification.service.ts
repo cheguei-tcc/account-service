@@ -13,7 +13,7 @@ export class NotificationService {
   ) {}
 
   async parentArrived(cpf: string, cnpj: string) {
-    const data = await this.userService.getParentChildren(cpf);
+    const data = await this.userService.getParentChildren(1);
 
     await this.mongo.collection('arrived').insertOne({
       ...data,

@@ -60,7 +60,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
           }).first();
 
         await trx('student_classroom').insert({
-          user_id: childId.id,
+          user_id: childId,
           classroom_id: classroomId,
         });
 
@@ -72,7 +72,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
     });
   }
 
-  async getParentChildren(parentCpf: string): Promise<
+  async getParentChildren(parentId: number): Promise<
     {
       parent: GenericUserDto;
       child: GenericUserDto;
@@ -80,10 +80,10 @@ export class UserRepositoryKnexImpl extends UserRepository {
     }[]
   > {
     const parentSelectData = this.knex.raw(
-      `json_build_object('name', u.name, 'cpf', u.cpf) as parent`,
+      `json_build_object('id', u.id, 'name', u.name, 'cpf', u.cpf) as parent`,
     );
     const childSelectData = this.knex.raw(
-      `json_build_object('name', u2.name, 'cpf', u2.cpf) as child`,
+      `json_build_object('id', u2.id, 'name', u2.name, 'cpf', u2.cpf) as child`,
     );
     const classroomSelectData = this.knex.raw(
       `json_build_object('name', c.name, 'period', c.period, 'description', c.description) as classroom`,
@@ -100,7 +100,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
       .innerJoin(`user as u2`, 'u2.parent_id', 'u.id')
       .innerJoin('student_classroom as sc', 'sc.user_id', 'u2.id')
       .innerJoin('classroom as c', 'c.id', 'sc.classroom_id')
-      .where('u.cpf', '=', parentCpf);
+      .where('u.id', '=', parentId);
   }
 
   async getAll(cnpj: string): Promise<GenericUserDto[] | UserInfoDto[]> {
@@ -113,7 +113,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
     const schoolInfoSelectData = this.knex.raw(
       `
       case when u.school_id is not null then
-        json_build_object('name', s.name, 'cnpj', s.cnpj, 'latitude', s.latitude, 'longitude', s.longitude) 
+        json_build_object('id', s.id, 'name', s.name, 'cnpj', s.cnpj, 'latitude', s.latitude, 'longitude', s.longitude) 
       end as school
       `,
     );
@@ -127,6 +127,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
     );
 
     const selectFields = [
+      'u.id',
       'u.name',
       'u.cpf',
       'u.email',
@@ -149,6 +150,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
     return this.userInfoCommonQuery(true).where('s.cnpj', '=', cnpj);
   }
 
+  
   async getUserInfo(email: string): Promise<UserInfoDto> {
     return this.userInfoCommonQuery().where('u.email', '=', email).first();
   }

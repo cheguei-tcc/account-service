@@ -12,7 +12,7 @@ export abstract class UserRepository {
   abstract edit(cpf: string, user: EditUserDto): Promise<void>;
   abstract delete(cpf: string): Promise<boolean>;
   abstract getUserInfo(email: string): Promise<UserInfoDto>;
-  abstract getParentChildren(parentCpf: string): Promise<
+  abstract getParentChildren(parentId: number): Promise<
     {
       parent: GenericUserDto;
       child: GenericUserDto;

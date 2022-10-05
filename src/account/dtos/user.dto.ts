@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 
 export type GenericUserDto = {
+  id: number;
   name: string;
   cpf: string;
   email: string;
@@ -21,12 +22,14 @@ export enum UserRole {
 }
 
 export interface UserInfoDto {
+  id: number;
   name: string;
   cpf: string;
   email: string;
   passwordHash: string;
   roles: string[];
   school?: {
+    id: number;
     name: string;
     cnpj: string;
     latitude?: string;
