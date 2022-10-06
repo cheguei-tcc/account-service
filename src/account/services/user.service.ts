@@ -24,13 +24,13 @@ export class UserService {
   };
 
   async createParentAndChildren(
-    cnpj: string,
+    schoolId: number,
     data: createParentAndChildrenDto,
   ): Promise<any> {
     data.defaultPassword = await this.encrypter.encrypt(
       process.env.DEFAULT_USER_PASSWORD || data.defaultPassword,
     );
-    return await this.userRepository.insertParentChildren(cnpj, data);
+    return await this.userRepository.insertParentChildren(schoolId, data);
   }
   async editUser(id: number, editUser: EditUserDto): Promise<void> {
     return await this.userRepository.edit(id, editUser);

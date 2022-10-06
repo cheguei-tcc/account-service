@@ -66,16 +66,14 @@ export class UserController {
   async createParentAndChildren(
     @Body() body: createParentAndChildrenDto,
     @Request() req,
-    @Query('schoolCnpj') schoolCnpj?: string
+    @Query('schoolId') schoolId?: string
   ): Promise<void> {
-    const cnpj = schoolCnpj ? schoolCnpj : req.user.school.cnpj;
-    
-    const parentId = await this.userService.createParentAndChildren(cnpj, body);
+    const parentId = await this.userService.createParentAndChildren(Number(schoolId), body);
     
     const responsibleUpsertMessage = {
       responsible: {
         id: parentId,
-        students: body.children.map(c => ({name: c.name, classroom: c.classroom.name, period: c.classroom.period}))
+        students: body.children.map(c => ({name: c.name, classroom: c.classroom.name, period: c.classroom.period, gender: c.gender }))
       }
     }
     

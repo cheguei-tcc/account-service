@@ -54,6 +54,7 @@ export interface createParentAndChildrenDto {
   children: {
     name: string;
     cpf: string;
+    gender?: string;
     classroom: { name: string; period: string; description: string };
   }[];
 }

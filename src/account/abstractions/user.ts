@@ -20,13 +20,14 @@ export abstract class UserRepository {
     }[]
   >;
   abstract insertParentChildren(
-    schoolCnpj: string,
+    schoolId: number,
     insertData: {
       parent: GenericUserDto;
       defaultPassword: string;
       children: {
         name: string;
         cpf: string;
+        gender?: string;
         classroom: { name: string; period: string; description: string };
       }[];
     },

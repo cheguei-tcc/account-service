@@ -17,12 +17,10 @@ export class UserRepositoryKnexImpl extends UserRepository {
   }
 
   insertParentChildren(
-    schoolCnpj: string,
+    schoolId: number,
     insertData: createParentAndChildrenDto,
   ): Promise<void> {
     return this.knex.transaction(async (trx) => {
-      const schoolId = trx('school').select('id').where({ cnpj: schoolCnpj });
-
       const { parent, defaultPassword, children } = insertData;
 
       const [parentId] = await trx('user')
@@ -33,6 +31,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
           phone_number: parent.phoneNumber,
           password: defaultPassword,
           school_id: schoolId,
+          gender_id: trx('gender').select('id').where({ name: parent.gender })
         })
         .returning('id');
 
@@ -49,6 +48,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
             parent_id: parentId,
             password: defaultPassword,
             school_id: schoolId,
+            gender_id: trx('gender').select('id').where({ name: child.gender })
           })
           .returning('id');
 
@@ -124,7 +124,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
     const parentInfoSelectData = this.knex.raw(
       `
       case when u.parent_id is not null then 
-        json_build_object('name', u2."name", 'cpf', u2.cpf )
+        json_build_object('name', u2."name", 'cpf', u2.cpf, 'gender', (select name from gender where id = u2.gender_id))
       end as parent
       `,
     );
@@ -135,6 +135,7 @@ export class UserRepositoryKnexImpl extends UserRepository {
       'u.cpf',
       'u.phone_number',
       'u.email',
+      this.knex.raw('(select name from gender where id = u.gender_id) as gender') ,
       schoolInfoSelectData,
       parentInfoSelectData,
       this.knex.raw(`
