@@ -14,6 +14,7 @@ const users = [
     cpf: '252.902.417-01',
     password: rootUserPass,
     role: 'super',
+    gender: 'male',
     email: 'user@super.com'
   },
   {
@@ -21,6 +22,7 @@ const users = [
     cpf: '103.011.320-38',
     password: adminPass,
     role: 'admin',
+    gender: 'male',
     schoolCnpj: marquesSurrogateKey,
     email: 'admin@novagente.com'
   },
@@ -29,6 +31,7 @@ const users = [
     cpf: '495.820.892-53',
     password: monitorPass,
     role: 'monitor',
+    gender: 'female',
     schoolCnpj: marquesSurrogateKey,
     email: 'monitor@novagente.com'
   },
@@ -37,6 +40,7 @@ const users = [
     cpf: '786.921.150-88',
     password: monitorPass,
     role: 'monitor',
+    gender: 'male',
     schoolCnpj: cefsaSurrogateKey,
     email: 'monitor-mino@adventista.com'
   },
@@ -45,6 +49,7 @@ const users = [
     cpf: '235.825.030-97',
     password: monitorPass,
     role: 'monitor',
+    gender: 'female',
     schoolCnpj: cefsaSurrogateKey,
     email: 'monitor-jaque@adventista.com'
   },
@@ -53,13 +58,14 @@ const users = [
 export async function seed(knex: Knex): Promise<any> {
   // super admin n monitors seed
   for (const user of users) {
-    const { role, schoolCnpj, ...userData } = user;
+    const { role, schoolCnpj, gender, ...userData } = user;
 
     const [userId] = await knex('user')
       .insert({
         ...userData,
         ...(schoolCnpj && {
           school_id: knex('school').select('id').where({ cnpj: schoolCnpj }),
+          gender_id: knex('gender').select('id').where({ name: gender }),
         }),
       })
       .returning('id')

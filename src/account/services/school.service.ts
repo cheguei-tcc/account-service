@@ -12,8 +12,8 @@ export class SchoolService {
     return this.schoolRepository.getAll();
   }
 
-  async getSchool(cnpj: string): Promise<SchoolDto> {
-    return this.schoolRepository.getSchool(cnpj);
+  async getSchool(id?: number): Promise<SchoolDto> {
+    return this.schoolRepository.getSchool(id);
   }
 
   async listStudents(schoolId: number): Promise<GenericUserDto[]> {
@@ -28,12 +28,12 @@ export class SchoolService {
     await this.schoolRepository.create(postSchool);
   }
 
-  async editSchool(cnpj: string, editSchool: EditSchoolDto): Promise<void> {
-    await this.schoolRepository.edit(cnpj, editSchool);
+  async editSchool(id: number, editSchool: EditSchoolDto): Promise<void> {
+    await this.schoolRepository.edit(id, editSchool);
   }
 
-  async deleteSchool(cnpj: string): Promise<boolean> {
-    return this.schoolRepository.delete(cnpj);
+  async deleteSchool(id: number): Promise<boolean> {
+    return this.schoolRepository.delete(id);
   }
 
   async addClassroom(classroom: PostClassroomDto): Promise<void> {

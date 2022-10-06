@@ -50,10 +50,10 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
     ]);
   }
 
-  async getSchool(cnpj: string): Promise<SchoolDto> {
+  async getSchool(id?: number): Promise<SchoolDto> {
     return this.knex('school')
       .select(['name', 'cnpj', 'address'])
-      .where({ cnpj })
+      .where({ id })
       .first();
   }
 
@@ -61,12 +61,12 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
     await this.knex('school').insert(school);
   }
 
-  async edit(cnpj: string, school: EditSchoolDto): Promise<void> {
-    await this.knex('school').update(school).where({ cnpj });
+  async edit(id: number, school: EditSchoolDto): Promise<void> {
+    await this.knex('school').update(school).where({ id });
   }
 
-  async delete(cnpj: string): Promise<boolean> {
-    const deleted = await this.knex('school').delete().where({ cnpj });
+  async delete(id: number): Promise<boolean> {
+    const deleted = await this.knex('school').delete().where({ id });
     return deleted > 0;
   }
 

@@ -16,12 +16,14 @@ const parentsData = [
     password: paiPass,
     phone_number: '953884989',
     schoolCnpj: cefsaSurrogateKey,
+    gender: 'male',
     children: [
       {
         name: 'João Filho',
         password: filhoPass,
         classroomName: 'Turma 1',
         period: 'Matutino',
+        gender: 'male'
       },
     ],
   },
@@ -30,6 +32,7 @@ const parentsData = [
     cpf: '023.286.220-62',
     email: "reculianinho@hotmail.com",
     password: paiPass,    
+    gender: 'male',
     phone_number: '123456',
     schoolCnpj: cefsaSurrogateKey,
     children: [
@@ -38,6 +41,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 1',
         period: 'Matutino',
+        gender: 'female',
       },
       {
         name: 'Lavinha',
@@ -45,6 +49,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 2',
         period: 'Matutino',
+        gender: 'female',
       },
     ],
   },
@@ -54,6 +59,7 @@ const parentsData = [
     phone_number: '123456',
     email: "jrcolombino@hotmail.com",
     password: paiPass,
+    gender: 'male',
     schoolCnpj: cefsaSurrogateKey,
     children: [
       {
@@ -61,6 +67,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 3',
         period: 'Matutino',
+        gender: 'male',
       },
     ],
   },
@@ -70,6 +77,7 @@ const parentsData = [
     password: paiPass,
     phone_number: '123456',
     email: "galvaobueno@hotmail.com",
+    gender: 'male',
     schoolCnpj: cefsaSurrogateKey,
     children: [
       {
@@ -78,6 +86,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 1',
         period: 'Matutino',
+        gender: 'male',
       },
     ],
   },
@@ -87,6 +96,7 @@ const parentsData = [
     password: paiPass,
     phone_number: '123456',
     email: "robertoneto@hotmail.com",
+    gender: 'male',
     schoolCnpj: cefsaSurrogateKey,
     children: [
       {
@@ -94,6 +104,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 3',
         period: 'Matutino',
+        gender: 'male',
       },
       {
         name: 'Roberta Sauro',
@@ -101,6 +112,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 2',
         period: 'Matutino',
+        gender: 'female',
       },
     ],
   },
@@ -110,6 +122,7 @@ const parentsData = [
     password: paiPass,
     phone_number: '123456',
     email: "mariadocarmo@hotmail.com",
+    gender: 'female',
     schoolCnpj: cefsaSurrogateKey,
     children: [
       {
@@ -117,6 +130,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 1',
         period: 'Matutino',
+        gender: 'male',
       },
     ],
   },
@@ -126,6 +140,7 @@ const parentsData = [
     phone_number: '123456',
     email: "fatimadorio@hotmail.com",
     password: paiPass,
+    gender: 'female',
     schoolCnpj: cefsaSurrogateKey,
     children: [
       {
@@ -134,6 +149,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 3',
         period: 'Matutino',
+        gender: 'male',
       },
     ],
   },
@@ -142,6 +158,7 @@ const parentsData = [
     name: 'Marcelo Mattos',
     password: paiPass,
     schoolCnpj: marquesSurrogateKey,
+    gender: 'male',
     email: "marcelomatos@hotmail.com",
     children: [
       {
@@ -149,6 +166,7 @@ const parentsData = [
         cpf: '818.224.940-60',
         password: filhoPass,
         classroomName: 'Turma 1A',
+        gender: 'male',
         period: 'Matutino',
       },
     ],
@@ -159,11 +177,13 @@ const parentsData = [
     email: "betaniagadu@hotmail.com",
     password: paiPass,
     schoolCnpj: marquesSurrogateKey,
+    gender: 'female',
     children: [
       {
         name: 'Betoven',
         cpf: '200.205.520-33',
         password: filhoPass,
+        gender: 'male',
         classroomName: 'Turma 1A',
         period: 'Matutino',
       },
@@ -174,6 +194,7 @@ const parentsData = [
     cpf: '325.463.000-91',
     password: paiPass,
     email: "pedroalvares@hotmail.com",
+    gender: 'male',
     schoolCnpj: marquesSurrogateKey,
     children: [
       {
@@ -181,6 +202,7 @@ const parentsData = [
         cpf: '213.710.640-08',
         password: filhoPass,
         classroomName: 'Turma 1B',
+        gender: 'female',
         period: 'Matutino',
       },
     ],
@@ -189,6 +211,7 @@ const parentsData = [
     name: 'Julio da Gaita',
     cpf: '226.080.980-45',    
     email: "gaitajl@hotmail.com",
+    gender: 'male',
     password: paiPass,
     schoolCnpj: marquesSurrogateKey,
     children: [
@@ -197,6 +220,7 @@ const parentsData = [
         cpf: '424.227.780-62',
         password: filhoPass,
         classroomName: 'Turma 1B',
+        gender: 'male',
         period: 'Matutino',
       },
     ],
@@ -206,6 +230,7 @@ const parentsData = [
     cpf: '566.228.460-14',
     email: "matrixrn@hotmail.com",
     password: paiPass,
+    gender: 'male',
     schoolCnpj: marquesSurrogateKey,
     children: [
       {
@@ -214,6 +239,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 2A',
         period: 'Matutino',
+        gender: 'female',
       },
     ],
   },
@@ -223,6 +249,7 @@ const parentsData = [
     email: "mariapattern@hotmail.com",
     password: paiPass,
     schoolCnpj: marquesSurrogateKey,
+    gender: 'female',
     children: [
       {
         name: 'Louro josé',
@@ -230,6 +257,7 @@ const parentsData = [
         password: filhoPass,
         classroomName: 'Turma 2A',
         period: 'Matutino',
+        gender: 'male',
       },
     ],
   },
@@ -238,6 +266,7 @@ const parentsData = [
     cpf: '556.508.950-66',
     password: paiPass,    
     email: "juniorfilhomaspai@hotmail.com",
+    gender: 'male',
     schoolCnpj: marquesSurrogateKey,
     children: [
       {
@@ -245,6 +274,7 @@ const parentsData = [
         cpf: '762.410.910-77',
         password: filhoPass,
         classroomName: 'Turma 2C',
+        gender: 'male',
         period: 'Matutino',
       },
     ],
@@ -254,11 +284,12 @@ const parentsData = [
 export async function seed(knex: Knex): Promise<any> {
   // Upsert seed entries
   for (const parent of parentsData) {
-    const { children, schoolCnpj, ...parentData } = parent;
+    const { children, schoolCnpj, gender, ...parentData } = parent;
     const [parentId] = await knex('user')
       .insert({
         ...parentData,
         school_id: knex('school').select('id').where({ cnpj: schoolCnpj }),
+        gender_id: knex('gender').select('id').where({ name: gender }),
       })
       .returning('id')
       .onConflict()
@@ -275,7 +306,7 @@ export async function seed(knex: Knex): Promise<any> {
       .ignore();
 
     for (const child of children) {
-      const { classroomName, period, ...childData } = child;
+      const { classroomName, period, gender, ...childData } = child;
 
       const school_id = knex('school').select('id').where({ cnpj: schoolCnpj });
 
@@ -283,6 +314,7 @@ export async function seed(knex: Knex): Promise<any> {
         .insert({
           ...childData,
           parent_id: parentId,
+          gender_id: knex('gender').select('id').where({ name: gender }),
           school_id,
         })
         .returning('id')

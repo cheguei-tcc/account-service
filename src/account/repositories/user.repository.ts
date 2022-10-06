@@ -83,10 +83,10 @@ export class UserRepositoryKnexImpl extends UserRepository {
     }[]
   > {
     const parentSelectData = this.knex.raw(
-      `json_build_object('id', u.id, 'name', u.name, 'cpf', u.cpf) as parent`,
+      `json_build_object('id', u.id, 'name', u.name, 'cpf', u.cpf, 'gender', u.gender) as parent`,
     );
     const childSelectData = this.knex.raw(
-      `json_build_object('id', u2.id, 'name', u2.name, 'cpf', u2.cpf) as child`,
+      `json_build_object('id', u2.id, 'name', u2.name, 'cpf', u2.cpf, 'gender', u2.gender) as child`,
     );
     const classroomSelectData = this.knex.raw(
       `json_build_object('name', c.name, 'period', c.period, 'description', c.description) as classroom`,
@@ -167,12 +167,12 @@ export class UserRepositoryKnexImpl extends UserRepository {
     return password;
   }
 
-  async edit(cpf: string, user: EditUserDto): Promise<void> {
-    await this.knex('user').update(user).where({ cpf });
+  async edit(id: number, user: EditUserDto): Promise<void> {
+    await this.knex('user').update(user).where({ id });
   }
 
-  async delete(cpf: string): Promise<boolean> {
-    const deleted = await this.knex('user').delete().where({ cpf });
+  async delete(id: number): Promise<boolean> {
+    const deleted = await this.knex('user').delete().where({ id });
     return deleted > 0;
   }
 

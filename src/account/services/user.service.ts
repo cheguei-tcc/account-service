@@ -32,12 +32,12 @@ export class UserService {
     );
     return await this.userRepository.insertParentChildren(cnpj, data);
   }
-  async editUser(cpf: string, editUser: EditUserDto): Promise<void> {
-    return await this.userRepository.edit(cpf, editUser);
+  async editUser(id: number, editUser: EditUserDto): Promise<void> {
+    return await this.userRepository.edit(id, editUser);
   }
 
-  async deleteUser(cpf: string): Promise<boolean> {
-    return await this.userRepository.delete(cpf);
+  async deleteUser(id: number): Promise<boolean> {
+    return await this.userRepository.delete(id);
   }
 
   async listUsers(cnpj: string): Promise<GenericUserDto[]> {

@@ -125,11 +125,11 @@ export class UserController {
 
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
-  @ApiParam({ name: 'cpf' })
-  @Put(':cpf')
+  @ApiParam({ name: 'id' })
+  @Put(':id')
   async editUser(@Body() body: EditUserDto, @Param() params): Promise<void> {
     try {
-      await this.userService.editUser(params.cpf, body);
+      await this.userService.editUser(Number(params.id), body);
     } catch (e) {
       if (e.code) {
         throw new HttpException(e.message, e.code);
@@ -140,10 +140,10 @@ export class UserController {
   }
 
   @Roles(Role.Admin, Role.Sudo)
-  @Delete(':cpf')
-  @ApiParam({ name: 'cpf' })
+  @Delete(':id')
+  @ApiParam({ name: 'id' })
   async deleteUser(@Param() params, @Res() res: Response) {
-    const deleted = await this.userService.deleteUser(params.cpf);
+    const deleted = await this.userService.deleteUser(Number(params.id));
     return deleted
       ? res.status(HttpStatus.NO_CONTENT).json()
       : res.status(HttpStatus.NOT_FOUND).json();

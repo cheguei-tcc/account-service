@@ -38,11 +38,11 @@ export class SchoolController {
     required: false,
   })
   async listSchools(
-    @Query('cnpj') cnpj: string,
+    @Query('id') id: string,
     @Res() res: Response,
   ): Promise<SchoolDto[] | any> {
-    if (cnpj) {
-      const school = await this.schoolService.getSchool(cnpj);
+    if (id) {
+      const school = await this.schoolService.getSchool(Number(id));
       return school
         ? res.status(HttpStatus.OK).json(school)
         : res.status(HttpStatus.NOT_FOUND).json();
@@ -80,27 +80,27 @@ export class SchoolController {
 
   @Put()
   @ApiQuery({
-    name: 'cnpj',
+    name: 'id',
     description: 'cnpjSchool to list students',
     required: true,
   })
   @Roles(Role.Sudo)
   async editSchool(
     @Body() body: EditSchoolDto,
-    @Query('cnpj') cnpj: string,
+    @Query('id') id: string,
   ): Promise<void> {
-    await this.schoolService.editSchool(cnpj, body);
+    await this.schoolService.editSchool(Number(id), body);
   }
 
   @Roles(Role.Sudo)
   @Delete()
   @ApiQuery({
-    name: 'cnpj',
+    name: 'id',
     description: 'cnpjSchool to list students',
     required: true,
   })
-  async deleteSchool(@Query('cnpj') cnpj: string, @Res() res: Response) {
-    const deleted = await this.schoolService.deleteSchool(cnpj);
+  async deleteSchool(@Query('id') id: string, @Res() res: Response) {
+    const deleted = await this.schoolService.deleteSchool(Number(id));
     return deleted
       ? res.status(HttpStatus.NO_CONTENT).json()
       : res.status(HttpStatus.NOT_FOUND).json();
