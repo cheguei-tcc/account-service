@@ -83,10 +83,10 @@ export class UserRepositoryKnexImpl extends UserRepository {
     }[]
   > {
     const parentSelectData = this.knex.raw(
-      `json_build_object('id', u.id, 'name', u.name, 'cpf', u.cpf, 'gender', u.gender) as parent`,
+      `json_build_object('id', u.id, 'name', u.name, 'cpf', u.cpf, 'gender', (select name from gender where id = u.gender_id)) as parent`,
     );
     const childSelectData = this.knex.raw(
-      `json_build_object('id', u2.id, 'name', u2.name, 'cpf', u2.cpf, 'gender', u2.gender) as child`,
+      `json_build_object('id', u2.id, 'name', u2.name, 'cpf', u2.cpf, 'gender', (select name from gender where id = u2.gender_id)) as child`,
     );
     const classroomSelectData = this.knex.raw(
       `json_build_object('name', c.name, 'period', c.period, 'description', c.description) as classroom`,

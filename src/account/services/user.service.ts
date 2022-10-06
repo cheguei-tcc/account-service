@@ -61,6 +61,8 @@ export class UserService {
     if (!repoData) throw new BaseError('User does not found', 404);
     const { parent } = repoData.find((data) => data.parent.id == parentId);
     const children = repoData.map((data) => ({
+      id: data.child.id,
+      gender: data.child.gender,
       name: data.child.name,
       cpf: data.child.cpf,
       classroom: data.classroom,

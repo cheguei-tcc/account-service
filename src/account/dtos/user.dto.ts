@@ -13,6 +13,7 @@ export type GenericUserDto = {
   cpf: string;
   email: string;
   phoneNumber?: string;
+  gender?: string;
 };
 
 export enum UserRole {
