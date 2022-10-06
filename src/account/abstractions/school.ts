@@ -15,12 +15,12 @@ export abstract class SchoolRepository {
   abstract createClassroom(classroom: PostClassroomDto): Promise<void>;
   abstract editClassroom(
     classroomEditDto: ClassroomDto,
-    cnpj: string,
+    schoolId: number,
     name: string,
     period: string,
   ): Promise<void>;
   abstract deleteClassroom(
-    cnpj: string,
+    schoolId: number,
     name: string,
     period: string,
   ): Promise<boolean>;

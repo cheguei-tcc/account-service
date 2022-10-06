@@ -42,18 +42,18 @@ export class SchoolService {
 
   async editClassroom(
     classroom: ClassroomDto,
-    cnpj: string,
+    schoolId: number,
     name: string,
     period: string,
   ): Promise<void> {
-    await this.schoolRepository.editClassroom(classroom, cnpj, name, period);
+    await this.schoolRepository.editClassroom(classroom, schoolId, name, period);
   }
 
   async deleteClassroom(
-    cnpj: string,
+    schoolId: number,
     name: string,
     period: string,
   ): Promise<boolean> {
-    return await this.schoolRepository.deleteClassroom(cnpj, name, period);
+    return await this.schoolRepository.deleteClassroom(schoolId, name, period);
   }
 }

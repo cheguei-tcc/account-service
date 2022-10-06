@@ -13,28 +13,28 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
 
   async editClassroom(
     classroomEditDto: ClassroomDto,
-    cnpj: string,
+    schoolId: number,
     name: string,
     period: string,
   ): Promise<void> {
     await this.knex('classroom')
       .update(classroomEditDto)
       .where({
-        school_id: this.knex('school').select('id').where({ cnpj }),
+        school_id: schoolId,
         name,
         period,
       });
   }
 
   async deleteClassroom(
-    cnpj: string,
+    schoolId: number,
     name: string,
     period: string,
   ): Promise<boolean> {
     const deleted = await this.knex('classroom')
       .delete()
       .where({
-        school_id: this.knex('school').select('id').where({ cnpj }),
+        school_id: schoolId,
         name,
         period,
       });

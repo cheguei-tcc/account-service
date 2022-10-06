@@ -119,11 +119,11 @@ export class SchoolController {
     @Body() body: ClassroomDto,
     @Param() params,
 
-    @Query('cnpj') cnpj: string,
+    @Query('schoolId') schoolId: string,
   ): Promise<void> {
     await this.schoolService.editClassroom(
       body,
-      cnpj,
+      Number(schoolId),
       params.name,
       params.period,
     );
@@ -139,9 +139,9 @@ export class SchoolController {
   @Delete('/classroom/:name/:period')
   @Roles(Role.Sudo, Role.Admin)
   async deleteClassroom(
-    @Query('cnpj') cnpj: string,
+    @Query('schoolId') schoolId: string,
     @Param() params,
   ): Promise<void> {
-    await this.schoolService.deleteClassroom(cnpj, params.name, params.period);
+    await this.schoolService.deleteClassroom(Number(schoolId), params.name, params.period);
   }
 }
