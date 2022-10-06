@@ -6,14 +6,18 @@ import {
   IsString,
   Matches,
 } from 'class-validator';
+import { ClassroomDto } from './clasroom.dto';
 
 export type GenericUserDto = {
   id: number;
   name: string;
   cpf: string;
   email: string;
+  roles: string[];
   phoneNumber?: string;
   gender?: string;
+  classroom?: string;
+  period?: string;
 };
 
 export enum UserRole {
@@ -21,6 +25,23 @@ export enum UserRole {
   Monitor = 'monitor',
   Student = 'student',
   Parent = 'parent',
+}
+
+export interface ResponsibleBySchoolDto {
+  id: number;
+  name: string;
+  cpf: string;
+  email: string;
+  phoneNumber?: string;
+  gender?: string;
+  roles: string[];
+  children: {
+    name: string;
+    cpf?: string;
+    email?: string;
+    classroom?: ClassroomDto,
+    gender?: string;
+  }[]
 }
 
 export interface UserInfoDto {

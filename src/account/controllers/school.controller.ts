@@ -19,7 +19,7 @@ import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Role, Roles } from '../../auth/roles.decorator';
 import { ClassroomDto, PostClassroomDto } from '../dtos/clasroom.dto';
 import { EditSchoolDto, PostSchoolDto, SchoolDto } from '../dtos/school.dto';
-import { GenericUserDto } from '../dtos/user.dto';
+import { GenericUserDto, ResponsibleBySchoolDto } from '../dtos/user.dto';
 import { SchoolService } from '../services/school.service';
 
 @ApiTags('Account')
@@ -29,6 +29,15 @@ import { SchoolService } from '../services/school.service';
 @ApiBearerAuth('accessToken')
 export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}
+
+  @ApiParam({ name: 'schoolId' })
+  @Get('/:schoolId/responsibles')
+  @Roles(Role.Sudo, Role.Admin)
+  async listResponsibles(
+    @Param() params,
+  ): Promise<ResponsibleBySchoolDto[]> {
+    return await this.schoolService.listResponsibles(Number(params.schoolId));
+  }
 
   @Get()
   @Roles(Role.Sudo, Role.Admin)

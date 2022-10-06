@@ -1,9 +1,16 @@
 import { ClassroomDto, PostClassroomDto } from '../dtos/clasroom.dto';
 import { EditSchoolDto, PostSchoolDto, SchoolDto } from '../dtos/school.dto';
-import { GenericUserDto } from '../dtos/user.dto';
+import { GenericUserDto, ResponsibleBySchoolDto } from '../dtos/user.dto';
 
 export abstract class SchoolRepository {
   abstract getAll(): Promise<SchoolDto[]>;
+  abstract getAllResponsibles(schoolId: number): Promise<
+  {
+    parent: GenericUserDto;
+    child: GenericUserDto;
+    classroom: { name: string; period: string; description: string };
+  }[]
+>;
   abstract create(school: PostSchoolDto): Promise<void>;
   abstract edit(id: number, school: EditSchoolDto): Promise<void>;
   abstract delete(id: number): Promise<boolean>;

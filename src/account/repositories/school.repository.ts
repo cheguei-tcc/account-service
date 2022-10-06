@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectKnex, Knex } from 'nestjs-knex';
 import { EditSchoolDto, PostSchoolDto, SchoolDto } from '../dtos/school.dto';
 import { SchoolRepository } from '../abstractions/school';
-import { GenericUserDto } from '../dtos/user.dto';
+import { GenericUserDto, ResponsibleBySchoolDto } from '../dtos/user.dto';
 import { ClassroomDto, PostClassroomDto } from '../dtos/clasroom.dto';
 
 @Injectable()
@@ -10,6 +10,39 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
   constructor(@InjectKnex() private readonly knex: Knex) {
     super();
   }
+
+  async getAllResponsibles(schoolId: number): Promise<
+  {
+    parent: GenericUserDto;
+    child: GenericUserDto;
+    classroom: { name: string; period: string; description: string };
+  }[]
+> {
+  const parentSelectData = this.knex.raw(
+    `json_build_object('id', u.id, 'name', u.name, 'cpf', u.cpf, 'email', u.email, 'phoneNumber', u.phone_number, 'gender', (select name from gender where id = u.gender_id)) as parent`,
+  );
+  
+  const childSelectData = this.knex.raw(
+    `json_build_object('id', u2.id, 'name', u2.name, 'cpf', u2.cpf, 'gender', (select name from gender where id = u2.gender_id)) as child`,
+  );
+  const classroomSelectData = this.knex.raw(
+    `json_build_object('name', c.name, 'period', c.period, 'description', c.description) as classroom`,
+  );
+
+  return await this.knex(`user as u`)
+    .select<
+    {
+      parent: GenericUserDto;
+      child: GenericUserDto;
+      classroom: { name: string; period: string; description: string };
+    }[]
+    >([parentSelectData, childSelectData, classroomSelectData])
+    .innerJoin(`school as s`, 's.id', 'u.school_id')
+    .innerJoin(`user as u2`, 'u2.parent_id', 'u.id')
+    .innerJoin('student_classroom as sc', 'sc.user_id', 'u2.id')
+    .innerJoin('classroom as c', 'c.id', 'sc.classroom_id')
+    .where('s.id', '=', schoolId);
+}
 
   async editClassroom(
     classroomEditDto: ClassroomDto,
