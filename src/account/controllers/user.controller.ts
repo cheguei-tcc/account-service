@@ -49,13 +49,13 @@ export class UserController {
   @ApiBearerAuth('accessToken')
   @UseGuards(JwtAuthGuard)
   @ApiQuery({
-    name: 'cnpj',
-    description: 'cnpjSchool to list students',
+    name: 'schoolId',
+    description: 'schoolId to list students',
     required: false,
   })
   @Get()
-  async listUsers(@Query('cnpj') cnpj?: string): Promise<GenericUserDto[]> {
-    return await this.userService.listUsers(cnpj);
+  async listUsers(@Query('schoolId') schoolId?: string): Promise<GenericUserDto[]> {
+    return await this.userService.listUsers(Number(schoolId));
   }
 
   @HttpCode(HttpStatus.CREATED)

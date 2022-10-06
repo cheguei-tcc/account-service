@@ -6,7 +6,7 @@ import {
 } from '../dtos/user.dto';
 
 export abstract class UserRepository {
-  abstract getAll(cnpj: string): Promise<GenericUserDto[]>;
+  abstract getAll(schoolId: number): Promise<GenericUserDto[]>;
   abstract getPasswordHash(cpf: string): Promise<string>;
   abstract create(user: PostUserDto): Promise<void>;
   abstract edit(id: number, user: EditUserDto): Promise<void>;

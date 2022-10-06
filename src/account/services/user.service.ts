@@ -40,8 +40,8 @@ export class UserService {
     return await this.userRepository.delete(id);
   }
 
-  async listUsers(cnpj: string): Promise<GenericUserDto[]> {
-    return this.userRepository.getAll(cnpj);
+  async listUsers(schoolId: number): Promise<GenericUserDto[]> {
+    return this.userRepository.getAll(schoolId);
   }
 
   async addUser(postUser: PostUserDto): Promise<void> {

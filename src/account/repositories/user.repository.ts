@@ -106,9 +106,9 @@ export class UserRepositoryKnexImpl extends UserRepository {
       .where('u.id', '=', parentId);
   }
 
-  async getAll(cnpj: string): Promise<GenericUserDto[] | UserInfoDto[]> {
-    return cnpj
-      ? this.getUsersInfo(cnpj)
+  async getAll(schoolId: number): Promise<GenericUserDto[] | UserInfoDto[]> {
+    return schoolId
+      ? this.getUsersInfo(schoolId)
       : this.knex('user').select(['name', 'email', 'cpf']);
   }
 
@@ -149,9 +149,9 @@ export class UserRepositoryKnexImpl extends UserRepository {
       .leftJoin('user as u2', 'u2.id', 'u.parent_id');
   }
 
-  private async getUsersInfo(cnpj: string): Promise<any> {
+  private async getUsersInfo(schoolId: number): Promise<any> {
     // omit password hash as true value
-    return this.userInfoCommonQuery(true).where('s.cnpj', '=', cnpj);
+    return this.userInfoCommonQuery(true).where('s.id', '=', schoolId);
   }
 
   
