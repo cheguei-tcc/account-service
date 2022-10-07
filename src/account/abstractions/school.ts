@@ -17,6 +17,7 @@ export abstract class SchoolRepository {
   abstract getSchool(id?: number): Promise<SchoolDto>;
   // students stuff
   abstract getAllStudents(schoolId: number): Promise<GenericUserDto[]>;
+  abstract getAllMonitors(schoolId: number): Promise<GenericUserDto[]>;
   // classroom stuff
   abstract getAllClassrooms(schoolId: number): Promise<ClassroomDto[]>;
   abstract createClassroom(classroom: PostClassroomDto): Promise<void>;

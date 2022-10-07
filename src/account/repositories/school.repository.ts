@@ -104,13 +104,30 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
   }
 
   async getAllStudents(schoolId: number): Promise<GenericUserDto[]> {
+    
+    const classroomSelectData = this.knex.raw(
+      `json_build_object('name', c.name, 'period', c.period, 'description', c.description) as classroom`,
+    );
+    
     return this.knex('user_role as ur')
-      .select(['u.cpf', 'u.name'])
+      .select<GenericUserDto[]>(['u.cpf', 'u.name', 'u.email', classroomSelectData])
+      .innerJoin('user as u', 'u.id', 'ur.user_id')
+      .innerJoin('role as r', 'r.id', 'ur.role_id')
+      .innerJoin('school as s', 's.id', 'u.school_id')
+      .innerJoin('student_classroom as sc', 'sc.user_id', 'u.id')
+      .innerJoin('classroom as c', 'c.id', 'sc.classroom_id')
+      .where('s.id', '=', schoolId)
+      .andWhere('r.name', '=', 'student');
+  }
+  
+  async getAllMonitors(schoolId: number): Promise<GenericUserDto[]> {
+    return this.knex('user_role as ur')
+      .select(['u.cpf', 'u.name', 'u.email'])
       .innerJoin('user as u', 'u.id', 'ur.user_id')
       .innerJoin('role as r', 'r.id', 'ur.role_id')
       .innerJoin('school as s', 's.id', 'u.school_id')
       .where('s.id', '=', schoolId)
-      .andWhere('r.name', '=', 'student');
+      .andWhere('r.name', '=', 'monitor');
   }
 
   async getAllClassrooms(schoolId: number): Promise<ClassroomDto[]> {

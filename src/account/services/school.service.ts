@@ -41,6 +41,10 @@ export class SchoolService {
     return this.schoolRepository.getAllStudents(schoolId);
   }
 
+  async listMonitors(schoolId: number): Promise<GenericUserDto[]> {
+    return this.schoolRepository.getAllMonitors(schoolId);
+  }
+
   async listClassrooms(schoolId: number): Promise<ClassroomDto[]> {
     return this.schoolRepository.getAllClassrooms(schoolId);
   }

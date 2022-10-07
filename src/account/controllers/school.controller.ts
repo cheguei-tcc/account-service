@@ -29,7 +29,6 @@ import { SchoolService } from '../services/school.service';
 @ApiBearerAuth('accessToken')
 export class SchoolController {
   constructor(private readonly schoolService: SchoolService) {}
-
   @ApiParam({ name: 'schoolId' })
   @Get('/:schoolId/responsibles')
   @Roles(Role.Sudo, Role.Admin)
@@ -72,7 +71,14 @@ export class SchoolController {
   async listStudents(@Query('schoolId') schoolId: string): Promise<GenericUserDto[]> {
     return await this.schoolService.listStudents(Number(schoolId));
   }
-
+  
+  @ApiQuery({ name: 'schoolId', description: 'schoolId to list students' })
+  @Get('/monitor')
+  @Roles(Role.Admin, Role.Sudo, Role.Monitor)
+  async listMonitors(@Query('schoolId') schoolId: string): Promise<GenericUserDto[]> {
+    return await this.schoolService.listMonitors(Number(schoolId));
+  }
+  
   @Get('/classroom')
   @Roles(Role.Admin, Role.Sudo, Role.Monitor)
   @ApiQuery({ name: 'schoolId', description: 'schoolId to list classrooms' })
