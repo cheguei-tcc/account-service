@@ -10,7 +10,6 @@ import {
 } from '../dtos/user.dto';
 import { Encrypter } from '../../common/abstractions/encrypter';
 import { BaseError } from '../../common/errors/base';
-import { ClassroomDto } from '../dtos/clasroom.dto';
 
 @Injectable()
 export class UserService {
@@ -67,7 +66,7 @@ export class UserService {
       cpf: data.child.cpf,
       classroom: data.classroom,
     }));
-    return { parent, children };
+    return { ...parent, children };
   }
 
   async login({ username, password }: UserLoginDto): Promise<UserInfoDto> {

@@ -115,8 +115,8 @@ export class UserController {
   }
 
   @Roles(Role.Sudo, Role.Admin)
-  @Get('/parent/:id/children')
-  @ApiParam({ name: 'parentId' })
+  @Get('/responsible/:id/children')
+  @ApiParam({ name: 'responsibleId' })
   async getParentChildren(@Param() params) {
     return await this.userService.getParentChildren(Number(params.id));
   }
