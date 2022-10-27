@@ -22,8 +22,8 @@ export class AuthService {
     const payload = {
       id: user.id,
       name: user.name,
-      cpf: user.cpf,
-      phoneNumber: user.phone_number,
+      cpf: user.cpf || "não informado",
+      phoneNumber: user.phone_number || "não informado",
       roles: user.roles,
       ...(user.parent && { parent: user.parent }),
       ...(user.school && { school: user.school }),
