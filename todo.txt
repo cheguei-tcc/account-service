@@ -1,0 +1,28 @@
+- autenticação jwt na rota de inserção em lote (account) [x]
+- emitir evento de calculo estimado de posição e tempo para o PAI (position-collector) [x]
+- lista filhos dado um CPF de um pai (account) [x]
+- passar a utilizar ID (all services) [x]
+- checar SNS entre account e students-pickup [x]
+
+- tratar evento canceled, enviar msg para o students-pickup remover da lista (position-collector, students-pickup) [x]
+------> canceled           position STATUS                                
+                \-------->/    canceled   \-----> ZREM key ----> emit responsible::ranking
+
+- implementar lista de alunos dispensados [x] (students-pickup) --- emitir no mesmo evento de dispensa de aluno unico                                          
+------> dismissed                                           
+                 \-------> HSET dismissed::responsible::id ----> ZREM key ----> emit responsible-ranking , dismissed-students
+
+- gender por usuário x] (account-service)
+
+- enviar evento arrived indicando que o responsavel chegou (position-collector) [x]
+
+- tratar trigger retirada de aluno (students-pickup) [x]
+- incrementar CRUD de listagem de info de PAIS e Monitores (account) [x]
+
+- passar a utilizar only ID (account) [x]
+
+---- TODO / ON GOIND
+
+- sync de todos os responsaveis via SNS [] (account-service)
+
+- criação de escola e classrooms pra facilitar script de inserção de dados [] (account-service)

@@ -192,7 +192,8 @@ export class UserRepositoryKnexImpl extends UserRepository {
 
       const [userId] = await trx('user')
         .insert({
-          cpf: user.cpf,
+          ...(user.cpf && { cpf: user.cpf }),
+          email: user.email,
           name: user.name,
           password: user.password,
           ...(user.relatedParentCPF && {

@@ -88,6 +88,11 @@ export class PostUserDto {
 
   @ApiProperty()
   @IsString()
+  @IsNotEmpty()
+  email: string;
+
+  @ApiProperty()
+  @IsString()
   @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
     message: 'expected user CPF format 123.456.789-10',
   })

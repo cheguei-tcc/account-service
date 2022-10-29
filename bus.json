@@ -1,0 +1,59 @@
+### ACCOUNT-SERVICE emit SNS
+
+{
+  "responsible": {
+    "id": 1,
+    "students": [
+      {
+        "name": "Rafaella Seki",
+        "classroom": "3A",
+        "period": "Matutino",
+        "gender": "female"
+      },
+      {
+        "name": "Pedrinho",
+        "classroom": "3A",
+        "period": "Matutino",
+        "gender": "male"
+      }
+    ]
+  }
+}
+
+### SQS STUDENTS PICKUP MSG
+
+{
+  "distanceMeters": 1500,
+  "estimatedTime": 180,
+  "responsible": {
+    "id": 375
+  },
+  "school"{
+    "id": 17
+  },
+  "status": "ON_THE_WAY"
+}
+
+### SQS 
+
+[
+  {
+    "responsible": {
+      "id": 375,
+      "students": [
+        {
+          "name": "Pedrinho",
+          "classroom": "3A",
+          "period": "Matutino",
+          "gender": "male"
+        }
+      ]
+    },
+    "rank": {
+      "value": 0,
+      "estimatedTime": 100,
+      "distanceMeters": 120
+    },
+  }, ...
+]
+
