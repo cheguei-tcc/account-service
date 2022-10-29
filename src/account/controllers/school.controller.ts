@@ -159,4 +159,12 @@ export class SchoolController {
   ): Promise<void> {
     await this.schoolService.deleteClassroom(Number(schoolId), params.name, params.period);
   }
+
+  
+  @Roles(Role.Sudo, Role.Admin)
+  @Get('/:schoolId/sync/responsibles')
+  @ApiParam({ name: 'schoolId' })
+  async syncResponsibleData(@Param() params) {
+    await this.schoolService.syncResponsibles(Number(params.schoolId));
+  }
 }

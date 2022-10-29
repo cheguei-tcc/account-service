@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { SNSService } from '../../aws/services/sns';
 import { BaseError } from '../../common/errors/base';
 import { SchoolRepository } from '../abstractions/school';
 import { ClassroomDto, PostClassroomDto } from '../dtos/clasroom.dto';
@@ -7,7 +8,10 @@ import { GenericUserDto, ResponsibleBySchoolDto } from '../dtos/user.dto';
 
 @Injectable()
 export class SchoolService {
-  constructor(private readonly schoolRepository: SchoolRepository) {}
+  constructor(
+    private readonly schoolRepository: SchoolRepository,
+    private readonly snsService: SNSService 
+    ) {}
 
   async listResponsibles(schoolId: number): Promise<ResponsibleBySchoolDto[]> {
     const repoData = await this.schoolRepository.getAllResponsibles(schoolId);
@@ -80,5 +84,15 @@ export class SchoolService {
     period: string,
   ): Promise<boolean> {
     return await this.schoolRepository.deleteClassroom(schoolId, name, period);
+  }
+
+  async syncResponsibles(schoolId: number): Promise<void> {    
+    console.log(`[enqueue responsibleUpsert] Start for schoolId => ${schoolId}`);
+    const responsibleUpsertMessages = await this.schoolRepository.getResponsibleWithStudents(schoolId);
+    console.log(`[enqueue responsibleUpsert] Messages => ${responsibleUpsertMessages.length} for schoolId => ${schoolId}`);
+    for (const responsibleUpsertMessage of responsibleUpsertMessages) {
+      await this.snsService.publishMessage(JSON.stringify(responsibleUpsertMessage), process.env.AWS_RESPONSIBLE_UPDATE_TOPIC_ARN);
+    }
+    console.log(`[enqueue responsibleUpsert] Finish for schoolId => ${schoolId}`);
   }
 }

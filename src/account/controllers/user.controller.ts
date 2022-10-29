@@ -161,19 +161,4 @@ export class UserController {
       }
     }
   }
-
-  @Roles(Role.Sudo)
-  @Get(':schoolId')
-  @ApiParam({ name: 'schoolId' })
-  async syncResponsibleData(@Param() params) {
-    try {
-      throw new Error('await this.userService.listResponsibleWithChildren()');
-    } catch (e) {
-      if (e.code) {
-        throw new HttpException(e.message, e.code);
-      } else {
-        throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    }
-  }
 }

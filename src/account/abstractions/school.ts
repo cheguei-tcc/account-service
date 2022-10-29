@@ -1,6 +1,6 @@
 import { ClassroomDto, PostClassroomDto } from '../dtos/clasroom.dto';
 import { EditSchoolDto, PostSchoolDto, SchoolDto } from '../dtos/school.dto';
-import { GenericUserDto, ResponsibleBySchoolDto } from '../dtos/user.dto';
+import { GenericUserDto, ResponsibleBySchoolDto, ResponsibleUpsertDto } from '../dtos/user.dto';
 
 export abstract class SchoolRepository {
   abstract getAll(): Promise<SchoolDto[]>;
@@ -21,6 +21,7 @@ export abstract class SchoolRepository {
   // classroom stuff
   abstract getAllClassrooms(schoolId: number): Promise<ClassroomDto[]>;
   abstract createClassroom(classroom: PostClassroomDto): Promise<void>;
+  abstract getResponsibleWithStudents(schoolId: number): Promise<ResponsibleUpsertDto[]>;
   abstract editClassroom(
     classroomEditDto: ClassroomDto,
     schoolId: number,

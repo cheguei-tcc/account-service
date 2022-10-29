@@ -8,6 +8,18 @@ import {
 } from 'class-validator';
 import { ClassroomDto } from './clasroom.dto';
 
+export type ResponsibleUpsertDto = {
+  responsible: {
+    id: number;
+    students: {
+      name: string;
+      classroom: string;
+      period: string;
+      gender: string;
+    }[];
+  };
+};
+
 export type GenericUserDto = {
   id: number;
   name: string;
@@ -39,9 +51,9 @@ export interface ResponsibleBySchoolDto {
     name: string;
     cpf?: string;
     email?: string;
-    classroom?: ClassroomDto,
+    classroom?: ClassroomDto;
     gender?: string;
-  }[]
+  }[];
 }
 
 export interface UserInfoDto {
