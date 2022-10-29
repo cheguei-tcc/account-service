@@ -93,6 +93,7 @@ export class PostUserDto {
 
   @ApiProperty()
   @IsString()
+  @IsOptional()
   @Matches(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, {
     message: 'expected user CPF format 123.456.789-10',
   })
@@ -108,6 +109,8 @@ export class PostUserDto {
   })
   @IsEnum(UserRole)
   role: string;
+
+  gender: string;
 
   @ApiProperty({ description: 'CNPJ school this user is related to' })
   @IsString()

@@ -202,6 +202,9 @@ export class UserRepositoryKnexImpl extends UserRepository {
               .where({ cpf: user.relatedParentCPF }),
           }),
           school_id: schoolId.id,
+          ...(user.gender && { 
+            gender_id: trx('gender').select('id').where({ name: user.gender })
+          })
         })
         .returning('id');
 
