@@ -11,6 +11,8 @@ import { ClassroomDto } from './clasroom.dto';
 export type ResponsibleUpsertDto = {
   responsible: {
     id: number;
+    name: string;
+    gender: string;
     students: {
       name: string;
       classroom: string;

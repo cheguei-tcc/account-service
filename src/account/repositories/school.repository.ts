@@ -155,7 +155,7 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
     schoolId: number,
   ): Promise<ResponsibleUpsertDto[]> {
     const response = await this.knex.raw(`
-    select u2.id parent_id, c."name" classroom, c."period", u.name, g."name" gender, u.id student_id from "user" u
+    select u2.id parent_id, u2."name" parent_name, (select name from gender g2 where g2.id = u2.gender_id) parent_gender, c."name" classroom, c."period", u.name, g."name" gender, u.id student_id from "user" u
     inner join "user" u2 on u2.id = u.parent_id 
     inner join student_classroom sc on sc.user_id = u.id
     inner join classroom c on c.id = sc.classroom_id
@@ -175,6 +175,8 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
       };
 
       const responsibleId = row.parent_id;
+      const responsibleName = row.parent_name;
+      const responsibleGender = row.parent_gender;
 
       if (responsiblesMap.has(responsibleId)) {
         responsiblesMap.get(responsibleId).responsible.students.push(student);
@@ -182,6 +184,8 @@ export class SchoolRepositoryKnexImpl extends SchoolRepository {
         responsiblesMap.set(responsibleId, {
           responsible: {
             id: responsibleId,
+            name: responsibleName,
+            gender: responsibleGender,
             students: [student],
           },
         });
